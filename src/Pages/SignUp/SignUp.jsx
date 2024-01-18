@@ -1,10 +1,35 @@
+import { useContext } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { AuthContext} from "../../Providers/AuthProvider";
+import Swal from "sweetalert2";
 
 const SignUp = () => {
-    const { register, handleSubmit,formState: { errors } } = useForm();
+    const { register, handleSubmit, reset, formState: { errors } } = useForm();
+    const { createUser, updateProfile}= useContext(AuthContext);
+    const navigate = useNavigate();
+
     const onSubmit = data =>{
         console.log(data);
+        reset();
+        createUser(data.email, data.password)
+        .then(result =>{
+            const loggedUser = result.user;
+            console.log(loggedUser);
+            updateProfile(data.name, data.photoURL)
+            .then(()=>{
+                console.log("user profile info updated");
+                reset();
+                Swal.fire({
+                    position:'top-end',
+                    icon: 'success',
+                    title:'User Created Successfully',
+                    showConfirmButton: false,
+                    timer:1500
+                })
+                navigate('/');
+            })
+        })
     }
     
     return (
@@ -39,7 +64,15 @@ const SignUp = () => {
                         <label className="label">
                             <span className="label-text">Password</span>
                         </label>
-                        <input type="password"  {...register("password")} placeholder="password" className="input input-bordered" />
+                        <input type="password"  {...register("password", {required:true,
+                             minLength: 6, 
+                             maxLength: 20,
+                             pattern: /(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z])/
+                             })} placeholder="password" className="input input-bordered" />
+                        {errors.password?.type ==='required' && <p className="text-red-600">Password is required</p>}
+                        {errors.password?.type ==='minLength' && <p className="text-red-600">Password must be at least 6 character</p>}
+                        {errors.password?.type ==='maxLength' && <p className="text-red-600">Password must be at most 20 character</p>}
+                        {errors.password?.type ==='pattern' && <p className="text-red-600">Password must be at least one uppercase, one lowercase, one digit and one special character</p>}
                         <label className="label">
                             <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
                         </label>
@@ -48,7 +81,7 @@ const SignUp = () => {
                         <input className="btn btn-primary" type="submit" value="Register" />
                     </div>
                 </form>
-                <p className="text-center mb-4"><small>Already Register?<Link to="/login">Login</Link></small></p>
+                <p className="text-center mb-4">Already Register?<Link to="/login">  <small className="text-blue-500">Login</small> </Link></p>
             </div>
         </div>
     </div>

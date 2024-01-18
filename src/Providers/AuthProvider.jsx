@@ -1,7 +1,6 @@
 import { createContext, useEffect, useState } from "react";
-import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut, updateProfile } from "firebase/auth";
 import { app } from "../firebase/firebase.config";
-import { set } from "react-hook-form";
 
 export const AuthContext = createContext(null);
 const auth = getAuth(app);
@@ -23,15 +22,23 @@ const AuthProvider = ({children}) => {
     }
 
     const logOut =()=>{
-        set(true);
+        setLoading(true);
         return signOut(auth);
+    }
+
+    const updateUserProfile = (name, photo)=>{
+        return updateProfile(auth.currentUser,{
+            displayName: name,
+            photoURL: photo
+        })
     }
 
 
     useEffect(()=>{
         const unSubscribe = onAuthStateChanged(auth, currentUser=>{
-            console.log(currentUser);
+            console.log('current user ',currentUser);
             setLoading(false);
+            setUser(currentUser);
         })
         return ()=> {
             return unSubscribe();
@@ -43,7 +50,8 @@ const AuthProvider = ({children}) => {
         loading,
         createUser,
         signIn,
-        logOut
+        logOut,
+        updateProfile
     }
     return (
         <AuthContext.Provider value={authInfo}>
