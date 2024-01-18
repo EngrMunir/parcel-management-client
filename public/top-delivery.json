@@ -1,0 +1,33 @@
+[
+    {
+      "deliveryManName": "Alex Johnson",
+      "image": "https://i.ibb.co/HpFkD5K/delivery7.jpg",
+      "parcelsDelivered": 876,
+      "averageRatings": 4.9
+    },
+    {
+      "deliveryManName": "Emily Rodriguez",
+      "image": "https://i.ibb.co/HpFkD5K/delivery7.jpg",
+      "parcelsDelivered": 932,
+      "averageRatings": 4.8
+    },
+    {
+      "deliveryManName": "David Smith",
+      "image": "https://i.ibb.co/HpFkD5K/delivery7.jpg",
+      "parcelsDelivered": 789,
+      "averageRatings": 4.7
+    },
+    {
+      "deliveryManName": "Sophie Chen",
+      "image": "https://i.ibb.co/HpFkD5K/delivery7.jpg",
+      "parcelsDelivered": 1054,
+      "averageRatings": 4.9
+    },
+    {
+      "deliveryManName": "Michael Brown",
+      "image": "https://i.ibb.co/HpFkD5K/delivery7.jpg",
+      "parcelsDelivered": 652,
+      "averageRatings": 4.6
+    }
+  ]
+  

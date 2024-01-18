@@ -21,28 +21,28 @@ const Dashboard = () => {
                     </li>
 
                     {/* delivery man */}
-                    <li><NavLink to="/dashboard/myProfile">
+                    <li><NavLink to="/dashboard/myDeliveryList">
                         <FaShoppingCart></FaShoppingCart>
                         My Delivery List</NavLink>
                     </li>
-                    <li><NavLink to="/dashboard/myProfile">
+                    <li><NavLink to="/dashboard/myReviews">
                         <FaShoppingCart></FaShoppingCart>
                         My Reviews</NavLink>
                     </li>
                     {/* admin */}
-                    <li><NavLink to="/dashboard/myProfile">
+                    <li><NavLink to="/dashboard/allParcels">
                         <FaShoppingCart></FaShoppingCart>
                         All Parcels</NavLink>
                     </li>
-                    <li><NavLink to="/dashboard/myProfile">
+                    <li><NavLink to="/dashboard/allUsers">
                         <FaShoppingCart></FaShoppingCart>
                         All Users</NavLink>
                     </li>
-                    <li><NavLink to="/dashboard/myProfile">
+                    <li><NavLink to="/dashboard/allDeliveryMen">
                         <FaShoppingCart></FaShoppingCart>
                         All Delivery Men</NavLink>
                     </li>
-                    <li><NavLink to="/dashboard/myProfile">
+                    <li><NavLink to="/dashboard/statistics">
                         <FaShoppingCart></FaShoppingCart>
                         Statistics</NavLink>
                     </li>
