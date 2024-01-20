@@ -3,10 +3,13 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext} from "../../Providers/AuthProvider";
 import Swal from "sweetalert2";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
+import SocialLogin from "../../Components/SocialLogin/SocialLogin";
 
 const SignUp = () => {
+    const axiosPublic = useAxiosPublic();
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
-    const { createUser, updateProfile}= useContext(AuthContext);
+    const { createUser, updateUserProfile}= useContext(AuthContext);
     const navigate = useNavigate();
 
     const onSubmit = data =>{
@@ -16,18 +19,28 @@ const SignUp = () => {
         .then(result =>{
             const loggedUser = result.user;
             console.log(loggedUser);
-            updateProfile(data.name, data.photoURL)
+            updateUserProfile(data.name, data.photoURL)
             .then(()=>{
-                console.log("user profile info updated");
-                reset();
-                Swal.fire({
-                    position:'top-end',
-                    icon: 'success',
-                    title:'User Created Successfully',
-                    showConfirmButton: false,
-                    timer:1500
-                })
-                navigate('/');
+                // create user entry in the database
+                const userInfo={
+                    name: data.name,
+                    email: data.email
+                }
+                axiosPublic.post('/users', userInfo)
+                .then(res =>{
+                    if(res.data.insertedId){
+                        console.log('user added to the database');
+                    reset();
+                    Swal.fire({
+                        position:'top-end',
+                        icon: 'success',
+                        title:'User Created Successfully',
+                        showConfirmButton: false,
+                        timer:1500
+                    });
+                    navigate('/');
+                    }
+                })                
             })
         })
     }
@@ -82,6 +95,7 @@ const SignUp = () => {
                     </div>
                 </form>
                 <p className="text-center mb-4">Already Register?<Link to="/login">  <small className="text-blue-500">Login</small> </Link></p>
+                <SocialLogin></SocialLogin>
             </div>
         </div>
     </div>

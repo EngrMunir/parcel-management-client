@@ -1,13 +1,38 @@
 import { NavLink, Outlet } from "react-router-dom";
-import { FaHome, FaShoppingCart } from "react-icons/fa";
+import { FaAd, FaHome, FaList, FaShoppingCart, FaUsers, FaUtensils } from "react-icons/fa";
 
 const Dashboard = () => {
+
+    // TODO:get admin value from the database
+
+    const isAdmin =true;
     return (
         <div className="flex">
             <div className="w-64 min-h-full bg-orange-400">
                 <ul className="menu">
-                    {/* User */}
-                    <li><NavLink to="/dashboard/bookParcel">
+                    {
+                        isAdmin ? 
+                        <>
+                            <li><NavLink to="/dashboard/allParcels">
+                            <FaHome></FaHome>
+                            All Parcels</NavLink>
+                    </li>
+                    <li><NavLink to="/dashboard/users">
+                        <FaUsers></FaUsers>
+                        All Users</NavLink>
+                    </li>
+                    <li><NavLink to="/dashboard/allDeliveryMen">
+                        <FaList></FaList>
+                        All Delivery Men</NavLink>
+                    </li>
+                    <li><NavLink to="/dashboard/statistics">
+                        <FaAd></FaAd>
+                        Statistics</NavLink>
+                    </li>
+                        </>
+                        :
+                        <>
+                             <li><NavLink to="/dashboard/bookParcel">
                         <FaHome></FaHome>
                         Book a Parcel </NavLink>
                     </li>
@@ -19,6 +44,10 @@ const Dashboard = () => {
                         <FaShoppingCart></FaShoppingCart>
                         My Profile</NavLink>
                     </li>
+                        </>
+                    }
+                    {/* User */}
+                   
 
                     {/* delivery man */}
                     <li><NavLink to="/dashboard/myDeliveryList">
@@ -30,22 +59,14 @@ const Dashboard = () => {
                         My Reviews</NavLink>
                     </li>
                     {/* admin */}
-                    <li><NavLink to="/dashboard/allParcels">
-                        <FaShoppingCart></FaShoppingCart>
-                        All Parcels</NavLink>
+                    
+                    {/* shared navlinks */}
+                    <div className="divider"></div> 
+                    <li><NavLink to="/">
+                        <FaHome></FaHome>
+                        Home</NavLink>
                     </li>
-                    <li><NavLink to="/dashboard/allUsers">
-                        <FaShoppingCart></FaShoppingCart>
-                        All Users</NavLink>
-                    </li>
-                    <li><NavLink to="/dashboard/allDeliveryMen">
-                        <FaShoppingCart></FaShoppingCart>
-                        All Delivery Men</NavLink>
-                    </li>
-                    <li><NavLink to="/dashboard/statistics">
-                        <FaShoppingCart></FaShoppingCart>
-                        Statistics</NavLink>
-                    </li>
+
                 </ul>
             </div>
             <div className="flex-1">
