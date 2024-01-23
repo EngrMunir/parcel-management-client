@@ -4,7 +4,6 @@ import { FaTrashAlt, FaUsers } from "react-icons/fa";
 import Swal from "sweetalert2";
 
 const AllUsers = () => {
-
     const axiosSecure = useAxiosSecure();
     const { data: users = [], refetch } = useQuery({
         queryKey: ['users'],
@@ -15,13 +14,13 @@ const AllUsers = () => {
     })
 
     const handleMakeAdmin= user=>{
-      axiosSecure.patch(`users/admin/${user._id}`)
+      axiosSecure.patch(`/users/admin/${user._id}`)
       .then(res =>{
         console.log(res.data)
         if(res.data.modifiedCount>0){
           refetch();
           Swal.fire({
-            position:"top-end",
+            position:"top-center",
             icon:"success",
             title:`${user.name} is an admin now!`,
             showConfirmButton:false,
@@ -82,16 +81,15 @@ const AllUsers = () => {
                 <td>{user.name}</td>
                 <td>{user.email}</td>
                 <td>
-                    { user.role ==='admin'? 'Admin' :
-                    <button onClick={()=>handleMakeAdmin(user)} className="btn btn-lg">
-                       <FaUsers className="text-orange-500"></FaUsers>
-                    </button>
-
+                    { user.role==='admin' ? 'Admin':
+                      <button onClick={()=>handleMakeAdmin(user)} className="btn btn-lg">
+                      <FaUsers className="text-white-500 bg-yellow-500"></FaUsers>
+                   </button>
                     }
                 </td>
                 <td>
                   <button onClick={()=>handleDeleteUser(user)} className="btn btn-ghost btn-lg">
-                    <FaTrashAlt className="text-white bg-red-500 text-2xl"></FaTrashAlt>
+                    <FaTrashAlt className="text-white bg-yellow-500 text-2xl"></FaTrashAlt>
                   </button>
                 </td>
               </tr>)

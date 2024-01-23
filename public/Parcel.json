@@ -1,0 +1,45 @@
+[
+    {
+      "name": "John Doe",
+      "email": "Ridman@Rihab.com",
+      "phoneNumber": "123-456-7890",
+      "parcelType": "Box",
+      "parcelWeight": 5,
+      "receiverName": "Jane Doe",
+      "receiverPhoneNumber": "987-654-3210",
+      "deliveryAddress": "123 Main St, Cityville",
+      "requestedDeliveryDate": "2024-01-30",
+      "deliveryAddressLatitude": "40.7128",
+      "deliveryAddressLongitude": "-74.0060",
+      "price": 750
+    },
+    {
+      "name": "Alice Johnson",
+      "email": "mukta@badam.com",
+      "phoneNumber": "456-789-0123",
+      "parcelType": "Envelope",
+      "parcelWeight": 1,
+      "receiverName": "Bob Smith",
+      "receiverPhoneNumber": "789-012-3456",
+      "deliveryAddress": "456 Oak St, Townsville",
+      "requestedDeliveryDate": "2024-02-05",
+      "deliveryAddressLatitude": "35.6895",
+      "deliveryAddressLongitude": "139.6917",
+      "price": 150
+    },
+    {
+      "name": "Emily White",
+      "email": "lalmia@gmail.com",
+      "phoneNumber": "789-012-3456",
+      "parcelType": "Package",
+      "parcelWeight": 8,
+      "receiverName": "David Brown",
+      "receiverPhoneNumber": "012-345-6789",
+      "deliveryAddress": "789 Pine St, Villagetown",
+      "requestedDeliveryDate": "2024-02-10",
+      "deliveryAddressLatitude": "51.5074",
+      "deliveryAddressLongitude": "-0.1278",
+      "price": 1200
+    }
+  ]
+  

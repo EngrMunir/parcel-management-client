@@ -6,6 +6,9 @@ import SignUp from "../Pages/SignUp/SignUp";
 import Dashboard from "../Layout/Dashboard";
 import Cart from "../Pages/Dashboard/Cart/Cart";
 import AllUsers from "../Pages/Dashboard/Cart/AllUsers/AllUsers";
+import AddParcels from "../Pages/Dashboard/AddParcels/AddParcels";
+import AdminRoute from "./AdminRoute";
+import MyParcels from "../Pages/Dashboard/MyParcels/MyParcels";
 
 export const router = createBrowserRouter([
     {
@@ -30,14 +33,25 @@ export const router = createBrowserRouter([
       path:'dashboard',
       element: <Dashboard></Dashboard>,
       children:[
+        // normal user routes
+        {
+          path:'bookParcel',
+          element:<AddParcels></AddParcels>
+        },
+        {
+          path:'myParcels',
+          element:<MyParcels></MyParcels>
+        },
         {
           path:'cart',
           element:<Cart></Cart>
         },
-        // admin routes
+
+
+        // admin only routes
         {
           path: 'users',
-          element: <AllUsers></AllUsers>
+          element: <AdminRoute><AllUsers></AllUsers></AdminRoute>
         }
       ]
     }

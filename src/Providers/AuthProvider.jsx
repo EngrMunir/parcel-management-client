@@ -1,7 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import { GoogleAuthProvider, createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth";
 import { app } from "../firebase/firebase.config";
-import useAxiosPublic from "../hooks/useAxiosPublic";
+import useAxiosSecure from "../hooks/useAxiosSecure";
 
 export const AuthContext = createContext(null);
 const auth = getAuth(app);
@@ -11,7 +11,7 @@ const AuthProvider = ({children}) => {
     const [user, setUser]= useState(null);
     const [loading, setLoading] = useState(true);
     const googleProvider = new GoogleAuthProvider();
-    const axiosPublic = useAxiosPublic();
+    const axiosPublic = useAxiosSecure();
 
     const createUser = (email, password)=>{
         setLoading(true);
@@ -44,24 +44,23 @@ const AuthProvider = ({children}) => {
 
     useEffect(()=>{
         const unSubscribe = onAuthStateChanged(auth, currentUser=>{
-            console.log('current user ',currentUser);
-            
             setUser(currentUser);
             if(currentUser){
-                const userInfo = { email: currentUser.email};
+                // get token and store it
+                const userInfo = {email: currentUser.email}
                 axiosPublic.post('/jwt', userInfo)
                 .then(res =>{
                     if(res.data.token){
                         localStorage.setItem('access-token', res.data.token);
                     }
                 })
-            }
-            else{
-                // TODO: remove token (if token stored in the client side: local storage, caching, in memory)
-                localStorage.removeItem('access-token');
+            }else{
+                // remove token
+                localStorage.removeItem('access-token')
             }
             setLoading(false);
         })
+
         return ()=> {
             return unSubscribe();
         }

@@ -8,7 +8,7 @@ const TopDeliveryMan = () => {
         fetch('top-delivery.json')
         .then(res => res.json())
         .then(data=>{
-            console.log(data);
+            // console.log(data);
             setDeliveryMen(data);
         })
         .catch(error=>console.log(error))
@@ -20,7 +20,7 @@ const TopDeliveryMan = () => {
             </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {
-                deliveryMen.map(item=><TopCard key={item.name} item={item}></TopCard>)
+                deliveryMen.map(item=><TopCard key={item._id} item={item}></TopCard>)
             }
         </div>
         </div>
