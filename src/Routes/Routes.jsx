@@ -4,11 +4,15 @@ import Home from "../Pages/Home/Home/Home";
 import Login from "../Pages/Login/Login";
 import SignUp from "../Pages/SignUp/SignUp";
 import Dashboard from "../Layout/Dashboard";
-import Cart from "../Pages/Dashboard/Cart/Cart";
-import AllUsers from "../Pages/Dashboard/Cart/AllUsers/AllUsers";
+
+
 import AddParcels from "../Pages/Dashboard/AddParcels/AddParcels";
 import AdminRoute from "./AdminRoute";
 import MyParcels from "../Pages/Dashboard/MyParcels/MyParcels";
+import AllParcels from "../Pages/Dashboard/AllParcels/AllParcels";
+import AllUsers from "../Pages/Dashboard/AllUsers/AllUsers";
+import AllDeliveryMen from "../Pages/Dashboard/AllDeliveryMen/AllDeliveryMen";
+import Statistics from "../Pages/Dashboard/Statistics/Statistics";
 
 export const router = createBrowserRouter([
     {
@@ -42,16 +46,23 @@ export const router = createBrowserRouter([
           path:'myParcels',
           element:<MyParcels></MyParcels>
         },
-        {
-          path:'cart',
-          element:<Cart></Cart>
-        },
-
-
+        
         // admin only routes
         {
           path: 'users',
           element: <AdminRoute><AllUsers></AllUsers></AdminRoute>
+        },
+        {
+          path:'allParcels',
+          element:<AllParcels></AllParcels>
+        },
+        {
+          path:'allDeliveryMen',
+          element:<AllDeliveryMen></AllDeliveryMen>
+        },
+        {
+          path: 'statistics',
+          element:<Statistics></Statistics>
         }
       ]
     }

@@ -1,7 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
-import useAxiosSecure from "../../../../hooks/useAxiosSecure";
+
 import { FaTrashAlt, FaUsers } from "react-icons/fa";
 import Swal from "sweetalert2";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const AllUsers = () => {
     const axiosSecure = useAxiosSecure();
@@ -23,6 +24,23 @@ const AllUsers = () => {
             position:"top-center",
             icon:"success",
             title:`${user.name} is an admin now!`,
+            showConfirmButton:false,
+            timer: 1500
+          })
+        }
+      })
+    }
+
+    const handleMakeDeliveryMen = user=>{
+      axiosSecure.patch(`/users/deliveryMen/${user._id}`)
+      .then(res =>{
+        console.log(res.data)
+        if(res.data.modifiedCount>0){
+          refetch();
+          Swal.fire({
+            position:"top-center",
+            icon:"success",
+            title:`${user.name} is a delivery men now!`,
             showConfirmButton:false,
             timer: 1500
           })
@@ -81,12 +99,21 @@ const AllUsers = () => {
                 <td>{user.name}</td>
                 <td>{user.email}</td>
                 <td>
-                    { user.role==='admin' ? 'Admin':
-                      <button onClick={()=>handleMakeAdmin(user)} className="btn btn-lg">
-                      <FaUsers className="text-white-500 bg-yellow-500"></FaUsers>
-                   </button>
+                    { user.role==='admin' ? 'Admin' :( user.role ==='deliveryMen'? 'Delivery Men':(
+                      <>
+                        <button onClick={()=>handleMakeAdmin(user)} className="btn btn-lg">
+                            <FaUsers className="text-white-500 bg-yellow-500"></FaUsers>
+                            Make Admin
+                        </button>
+                        <button onClick={()=>handleMakeDeliveryMen(user)} className="btn btn-lg">
+                            <FaUsers className="text-white-500 bg-yellow-500"></FaUsers>
+                            Make DeliveryMen
+                        </button>
+                      </>)
+                      )
                     }
                 </td>
+              
                 <td>
                   <button onClick={()=>handleDeleteUser(user)} className="btn btn-ghost btn-lg">
                     <FaTrashAlt className="text-white bg-yellow-500 text-2xl"></FaTrashAlt>
@@ -94,7 +121,6 @@ const AllUsers = () => {
                 </td>
               </tr>)
         }
-     
     </tbody>
   </table>
 </div>
