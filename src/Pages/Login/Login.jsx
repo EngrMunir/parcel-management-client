@@ -1,11 +1,12 @@
 import { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Providers/AuthProvider";
 import Swal from "sweetalert2";
 import SocialLogin from "../../Components/SocialLogin/SocialLogin";
 
 const Login = () => {
     const { signIn }= useContext(AuthContext);
+    const navigate = useNavigate();
     const handleLogin = e =>{
         e.preventDefault();
         const form = e.target;
@@ -17,6 +18,7 @@ const Login = () => {
         .then(result=>{
             const user = result.user;
             console.log(user);
+            navigate('/')
             Swal.fire({
                 title: "User LoggedIn Successful",
                 showClass: {
@@ -28,7 +30,8 @@ const Login = () => {
                   popup: `
                     animate__animated animate__fadeOutDown animate__faster
                   `
-                }
+                },
+                
               });
         })
 

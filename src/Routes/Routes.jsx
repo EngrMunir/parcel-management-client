@@ -13,6 +13,9 @@ import AllParcels from "../Pages/Dashboard/AllParcels/AllParcels";
 import AllUsers from "../Pages/Dashboard/AllUsers/AllUsers";
 import AllDeliveryMen from "../Pages/Dashboard/AllDeliveryMen/AllDeliveryMen";
 import Statistics from "../Pages/Dashboard/Statistics/Statistics";
+import PrivateRoute from "./PrivateRoute";
+import MyDeliveryList from "../Pages/Dashboard/MyDeliveryList/MyDeliveryList";
+import MyReviews from "../Pages/Dashboard/MyReviews/MyReviews";
 
 export const router = createBrowserRouter([
     {
@@ -35,7 +38,7 @@ export const router = createBrowserRouter([
     },
     {
       path:'dashboard',
-      element: <Dashboard></Dashboard>,
+      element: <PrivateRoute><Dashboard></Dashboard></PrivateRoute>,
       children:[
         // normal user routes
         {
@@ -63,6 +66,15 @@ export const router = createBrowserRouter([
         {
           path: 'statistics',
           element:<Statistics></Statistics>
+        },
+        // delivery Men Routes
+        {
+          path:'myDeliveryList',
+          element:<MyDeliveryList></MyDeliveryList>
+        },
+        {
+          path:'myReviews',
+          element:<MyReviews></MyReviews>
         }
       ]
     }

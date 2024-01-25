@@ -7,8 +7,27 @@ import { MdRateReview } from "react-icons/md";
 
 import { CgProfile } from "react-icons/cg";
 import useAdmin from "../hooks/useAdmin";
+import { useContext, useEffect, useState } from "react";
+import useAxiosSecure from "../hooks/useAxiosSecure";
+import { AuthContext } from "../Providers/AuthProvider";
 
 const Dashboard = () => {
+    const axiosSecure = useAxiosSecure();
+    const [isDeliveryMen, setIsDeliveryMen]= useState(false);
+    const {user} = useContext(AuthContext);
+    const userEmail = user.email;
+    console.log(userEmail);
+    useEffect(()=>{
+        axiosSecure.get(`/users/deliveryMen/${userEmail}`)
+        .then(res=>{
+          const { isDeliveryMen }= res.data;
+          setIsDeliveryMen(isDeliveryMen);
+        })
+        .catch(error=>{
+          console.log('error in role delivery men ',error);
+        })
+    },[axiosSecure, userEmail])
+
 
     // TODO:get admin value from the database
 
@@ -19,7 +38,7 @@ const Dashboard = () => {
             <div className="w-64 min-h-full bg-orange-400">
                 <ul className="menu">
                     {
-                        isAdmin ? 
+                        isAdmin? (
                         <>
                             <li><NavLink to="/dashboard/allParcels">
                                  <FaHome></FaHome>
@@ -38,10 +57,24 @@ const Dashboard = () => {
                              Statistics</NavLink>
                             </li>
                         </>
-                        :
-                        <>
-                        {/* user */}
-                            <li><NavLink to="/dashboard/bookParcel">
+                        )
+                        : isDeliveryMen?
+                        
+                        (<>
+                        {/* delivery man */}
+                        <li><NavLink to="/dashboard/myDeliveryList">
+                            <FaList />
+                                My Delivery List</NavLink>
+                        </li>
+                        <li><NavLink to="/dashboard/myReviews">
+                            <MdRateReview />
+                            My Reviews</NavLink>
+                        </li>    
+                        </>):
+                        (
+                            <>
+                            {/* user */}
+                        <li><NavLink to="/dashboard/bookParcel">
                             <TbBrandBooking />
                                  Book a Parcel </NavLink>
                             </li>
@@ -53,22 +86,10 @@ const Dashboard = () => {
                             <CgProfile />
                                  My Profile</NavLink>
                             </li>
-                        </>
+                            </>
+                        )
                     }
-                   
-                
-                    {/* delivery man */}
-                    <li><NavLink to="/dashboard/myDeliveryList">
-                    <FaList />
-                        My Delivery List</NavLink>
-                    </li>
-                    <li><NavLink to="/dashboard/myReviews">
-                    <MdRateReview />
-                        My Reviews</NavLink>
-                    </li>
-                    
-                    
-                    {/* shared navlinks */}
+                        {/* shared navlinks */}
                     <div className="divider"></div> 
                     <li><NavLink to="/">
                         <FaHome></FaHome>

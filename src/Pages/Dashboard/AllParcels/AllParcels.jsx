@@ -4,13 +4,13 @@ import { useState } from "react";
 
 const AllParcels = () => {
     const axiosSecure = useAxiosSecure();
-    const [allParcels, setAllParcels] = useState();
+    // const [allParcels, setAllParcels] = useState();
     const { data: parcels = [] } = useQuery({
         queryKey: ['parcels'],
         queryFn: async ()=>{
             const res = await axiosSecure.get('/parcels');
             console.log(res.data)
-            setAllParcels(res.data)
+            // setAllParcels(res.data)
             return res.data;
         }
     })
@@ -31,13 +31,21 @@ const AllParcels = () => {
             </tr>
           </thead>
           <tbody>
-            {/* row 1 */}
-            <tr>
-              <th>1</th>
-              <td>Cy Ganderton</td>
-              <td>Quality Control Specialist</td>
+            { 
+              parcels.map((item, index)=>(
+                <tr key={index}>
+              <th>{index+1}</th>
+              <td>owner</td>
+              <td>{item.phoneNumber}</td>
               <td>Blue</td>
+              <td>{item.requestedDeliveryDate}</td>
+              <td>{item.price}</td>
+              <td>{item.status}</td>
+              <td>Manage Button</td>
             </tr>
+              ))
+            }
+            
             
           </tbody>
         </table>
