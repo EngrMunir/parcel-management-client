@@ -4,6 +4,7 @@ import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import { useQuery } from "@tanstack/react-query";
 import { MdCancel, MdOutlineReviews, MdUpdate } from "react-icons/md";
 import { FaAmazonPay } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 
 
@@ -21,6 +22,11 @@ const MyParcels = () => {
             return res.data;
         }
     })
+    const handleCancel= async(parcelId)=>{
+        const res = await axiosPublic.patch(`/parcels/${parcelId}/cancel`,{status: 'cancelled'})
+        console.log(res.data);
+      
+    }
 
     return (
         <div className="overflow-x-auto">
@@ -30,10 +36,11 @@ const MyParcels = () => {
       <tr>
         <th></th>
         <th>Parcel Type</th>
-        <th>Requested Delivery Date</th>
-        <th>Approximate Delivery Date</th>
-        <th>Booking Date</th>
-        <th>Delivery Men ID</th>
+        <th>R D Date</th>
+        <th>A D Date</th>
+        <th>B Date</th>
+        <th>D Men ID</th>
+        <th>Status</th>
         <th>Update</th>
         <th>Cancel</th>
         <th>Reviews</th>
@@ -46,15 +53,37 @@ const MyParcels = () => {
         <th>{index +1}</th>
         <td>{item.parcelType}</td>
         <td>{item.requestedDeliveryDate}</td>
-        <td>A Delivery Date</td>
-        <td>Booking Date</td>
+        <td>A Delivery </td>
+        <td>{item.bookingDate}</td>
         <td>
-          Delivery man id
+          Delivery Id
         </td>
-        <td><MdUpdate /></td>
-        <td><MdCancel /></td>
-        <td><MdOutlineReviews /></td>
-        <td><FaAmazonPay /></td>
+        <td>{item.status}</td>
+        <td>
+          <Link to={`/dashboard/updateParcel/${item._id}`}>
+            <button className="btn btn-ghost btn-lg bg-orange-500">
+            <MdUpdate />
+            {item._id}
+            </button>
+          </Link>
+        </td>
+        <td className="text-2xl">
+          { item.status ==='pending'?
+            <button onClick={()=>handleCancel(item._id)}><MdCancel /></button>
+            :
+            <button disabled><MdCancel /></button>
+          }
+        </td>
+        <td className="text-2xl"><MdOutlineReviews /></td>
+        <td>
+          { myParcels.length ?
+            <Link to="/dashboard/payment">
+            <button className="btn btn-primary"><FaAmazonPay /></button>
+          </Link>:
+          <button disabled className="btn btn-primary"><FaAmazonPay /></button>
+
+          }
+        </td>
       </tr>
       )
       }

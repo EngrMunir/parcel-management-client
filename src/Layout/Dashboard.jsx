@@ -16,11 +16,12 @@ const Dashboard = () => {
     const [isDeliveryMen, setIsDeliveryMen]= useState(false);
     const {user} = useContext(AuthContext);
     const userEmail = user.email;
-    console.log(userEmail);
+    // console.log(userEmail);
     useEffect(()=>{
         axiosSecure.get(`/users/deliveryMen/${userEmail}`)
         .then(res=>{
-          const { isDeliveryMen }= res.data;
+            console.log(res.data);
+          const {isDeliveryMen}= res.data;
           setIsDeliveryMen(isDeliveryMen);
         })
         .catch(error=>{
@@ -73,19 +74,19 @@ const Dashboard = () => {
                         </>):
                         (
                             <>
-                            {/* user */}
-                        <li><NavLink to="/dashboard/bookParcel">
-                            <TbBrandBooking />
-                                 Book a Parcel </NavLink>
-                            </li>
-                            <li><NavLink to="/dashboard/myParcels">
-                            <MdProductionQuantityLimits />
-                             My Parcels</NavLink>
-                            </li>
-                            <li><NavLink to="/dashboard/myProfile">
-                            <CgProfile />
-                                 My Profile</NavLink>
-                            </li>
+                                {/* user */}
+                                <li><NavLink to="/dashboard/bookParcel">
+                                <TbBrandBooking />
+                                    Book a Parcel </NavLink>
+                                </li>
+                                <li><NavLink to="/dashboard/myParcels">
+                                <MdProductionQuantityLimits />
+                                    My Parcels</NavLink>
+                                </li>
+                                <li><NavLink to="/dashboard/myProfile">
+                                <CgProfile />
+                                    My Profile</NavLink>
+                                </li>
                             </>
                         )
                     }
@@ -95,7 +96,6 @@ const Dashboard = () => {
                         <FaHome></FaHome>
                         Home</NavLink>
                     </li>
-
                 </ul>
             </div>
             <div className="flex-1">

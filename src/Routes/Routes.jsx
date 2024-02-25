@@ -16,6 +16,9 @@ import Statistics from "../Pages/Dashboard/Statistics/Statistics";
 import PrivateRoute from "./PrivateRoute";
 import MyDeliveryList from "../Pages/Dashboard/MyDeliveryList/MyDeliveryList";
 import MyReviews from "../Pages/Dashboard/MyReviews/MyReviews";
+import Payment from "../Pages/Dashboard/Payment/Payment";
+import MyProfile from "../Pages/Dashboard/MyProfile/MyProfile";
+import UpdateParcel from "../Pages/Dashboard/UpdateParcel/UpdateParcel";
 
 export const router = createBrowserRouter([
     {
@@ -49,7 +52,19 @@ export const router = createBrowserRouter([
           path:'myParcels',
           element:<MyParcels></MyParcels>
         },
-        
+        {
+          path:'updateParcel/:id',
+          element:<UpdateParcel></UpdateParcel>,
+          // loader: ({params})=>fetch(`http://localhost:5000/parcels/update/${params.id}`)
+        },
+        {
+          path:'myProfile',
+          element:<MyProfile></MyProfile>
+        },
+        {
+          path:'payment',
+          element:<Payment></Payment>
+        },
         // admin only routes
         {
           path: 'users',

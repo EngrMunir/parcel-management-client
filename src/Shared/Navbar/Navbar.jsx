@@ -1,12 +1,25 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../Providers/AuthProvider";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
+import { useQuery } from "@tanstack/react-query";
 
 const Navbar = () => {
     const { user, logOut } = useContext(AuthContext);
-    console.log('user in navbar ', user)
+    // console.log('user in navbar ', user)
     // const name = user?.displayName; 
-    // console.log(name);
+    // console.log('user name ',name);
+    const axiosPublic = useAxiosPublic();
+        const { data } = useQuery({
+        queryKey:[user?.email],
+        queryFn: async()=>{
+            const res = await axiosPublic.get(`/users/${user?.email}`);
+            return res.data;
+        }
+    })
+
+    // console.log('current user data is ', data);
+
 
 
     const handleLogOut =()=>{
@@ -20,7 +33,7 @@ const Navbar = () => {
     const navlinks = 
     <>
         <li><Link to="/">Home</Link></li>
-        <li><Link to="/dashboard/allParcels">Dashboard</Link></li>
+        <li><Link to="/dashboard">Dashboard</Link></li>
         <li><Link to="/">Notification</Link></li>
         
         {
@@ -60,7 +73,12 @@ const Navbar = () => {
                             </div>
                         </div>
                         <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
-                            <li>User name</li>
+                            {
+                                user && data?.length> 0 && (
+                                    <li>{data[0]?.name}</li>
+                                )
+                               
+                            }
                             <li><a>Dashboard</a></li>
                             <button onClick={handleLogOut} className="btn btn-primary">Logout</button>
                         </ul>

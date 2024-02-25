@@ -1,10 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
-import { useState } from "react";
 
 const AllDeliveryMen = () => {
     const axiosSecure = useAxiosSecure();
-    const { data: deliveryMen = [] } = useQuery({
+    const { data: deliveryMen = [], isLoading, error } = useQuery({
         queryKey: ['deliveryMen'],
         queryFn: async ()=>{
             const res = await axiosSecure.get('/users/deliveryMen');
@@ -12,6 +11,13 @@ const AllDeliveryMen = () => {
             return res.data;
         }
     })
+    if (isLoading) {
+      return <p>Loading...</p>;
+    }
+    
+    if (error) {
+      return <p>Error: {error.message}</p>;
+    }
     return (
         <div className="overflow-x-auto">
   <table className="table table-zebra">

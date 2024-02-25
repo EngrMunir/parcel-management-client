@@ -1,17 +1,26 @@
 import { useContext, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import { useForm } from "react-hook-form";
 import { AuthContext } from "../../../Providers/AuthProvider";
-import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import Swal from "sweetalert2";
 
-const AddParcels = () => {
 
+const UpdateParcel = () => {
+    // const {item} = useLoaderData();
+    const [item, setItem]=useState([]);
+    const { id }= useParams();
     const {user} = useContext(AuthContext);
     const { register, handleSubmit,formState: { errors } } = useForm();
     const [parcelWeight, setParcelWeight]= useState(0);
     const [totalPrice, setTotalPrice]= useState(0);
     const axiosPublic = useAxiosPublic();
 
+    useEffect(()=>{
+        fetch(`http://localhost:5000/parcels/update/${id}`)
+        .then(res=>res.json())
+        .then(data=> setItem(data))
+    },[id])
     const calculatePrice = (weight) => {
         if (weight === 1) {
           return weight * 50;
@@ -29,6 +38,8 @@ const AddParcels = () => {
          setTotalPrice(price);
          }, [parcelWeight]);
 
+
+    console.log(item);
     const onSubmit = (data) =>{
         
         const price = calculatePrice(parcelWeight);
@@ -43,7 +54,6 @@ const AddParcels = () => {
                 }
             })
     }
-    
     return (
         <div>
             <h2 className="text-4xl text-center">Booking Your Parcels</h2>
@@ -56,7 +66,7 @@ const AddParcels = () => {
                                 <div className="label">
                                     <span className="label-text">Name</span>
                                 </div>
-                                <input type="text" {...register("name")} defaultValue={user?.displayName} className="input input-bordered w-full" readOnly />
+                                <input type="text" {...register("name")} defaultValue={item.name} className="input input-bordered w-full" readOnly />
                             </label>
                         </div>
                         <div>
@@ -64,7 +74,7 @@ const AddParcels = () => {
                                 <div className="label">
                                     <span className="label-text">Email</span>
                                 </div>
-                                <input type="email" {...register("email")} defaultValue={user?.email} className="input input-bordered w-full " readOnly />
+                                <input type="email" {...register("email")} defaultValue={item.email} className="input input-bordered w-full " readOnly />
                             </label>
                         </div>
                         <div>
@@ -72,7 +82,7 @@ const AddParcels = () => {
                         <div className="label">
                             <span className="label-text">Phone Number</span>
                         </div>
-                        <input type="text" {...register("phoneNumber",{required: true})} placeholder="Type here" className="input input-bordered w-full" />
+                        <input type="text" {...register("phoneNumber",{required: true})} defaultValue={item.phoneNumber} className="input input-bordered w-full" />
                         { errors.phoneNumber && <span>Phone number is required</span>}
                     </label>
                     </div>
@@ -84,7 +94,7 @@ const AddParcels = () => {
                             <div className="label">
                                 <span className="label-text">Parcel Type</span>
                             </div>
-                            <input type="text" {...register("parcelType",{required: true})} placeholder="parcel type" className="input input-bordered w-full " />
+                            <input defaultValue={item.parcelType} type="text" {...register("parcelType",{required: true})} className="input input-bordered w-full " />
                             { errors.parcelType && <span>Parcel Type is required</span>}
                         </label>
                    </div>
@@ -93,8 +103,8 @@ const AddParcels = () => {
                             <div className="label">
                                 <span className="label-text">Parcel Weight</span>
                             </div>
-                            <input type="number" {...register("parcelWeight",{required: true})} 
-                            placeholder="weight"
+                            <input defaultValue={item.parcelWeight} type="number" {...register("parcelWeight",{required: true})} 
+                            
                              className="input input-bordered w-full"
                              onChange={(e) => {
                                     const newValue = parseFloat(e.target.value);
@@ -111,7 +121,7 @@ const AddParcels = () => {
                         <div className="label">
                             <span className="label-text">Reciever's Name</span>
                         </div>
-                        <input type="text" {...register("receiverName",{required: true})} placeholder="receiver name" className="input input-bordered w-full" />
+                        <input defaultValue={item.receiverName} type="text" {...register("receiverName",{required: true})}  className="input input-bordered w-full" />
                         { errors.receiverName && <span>Phone number is required</span>}
                     </label>
                    </div>
@@ -123,7 +133,7 @@ const AddParcels = () => {
                                 <div className="label">
                                     <span className="label-text">Receiver's Phone Number</span>
                                 </div>
-                                <input type="number" {...register("receiverPhoneNumber",{required: true})} placeholder="Type here" className="input input-bordered w-full " />
+                                <input defaultValue={item.receiverPhoneNumber} type="number" {...register("receiverPhoneNumber",{required: true})} className="input input-bordered w-full " />
                                 { errors.receiverPhoneNumber && <span>Receiver Phone number is required</span>}
                             </label>
                         </div>
@@ -132,7 +142,7 @@ const AddParcels = () => {
                                 <div className="label">
                                     <span className="label-text">Parcel Delivery Address</span>
                                 </div>
-                                <input type="text" {...register("deliveryAddress",{required: true})} placeholder="delivery address" className="input input-bordered w-full " />
+                                <input defaultValue={item.deliveryAddress} type="text" {...register("deliveryAddress",{required: true})} className="input input-bordered w-full " />
                                 { errors.deliveryAddress && <span>Delivery Address is required</span>}
                             </label>
                         </div>
@@ -141,7 +151,7 @@ const AddParcels = () => {
                                 <div className="label">
                                     <span className="label-text">Requested Delivery Date</span>
                                 </div>
-                                <input type="date" {...register("requestedDeliveryDate",{required: true})} placeholder="date" className="input input-bordered w-full " />
+                                <input defaultValue={item.requestedDeliveryDate} type="date" {...register("requestedDeliveryDate",{required: true})}  className="input input-bordered w-full " />
                             </label>
                         </div>
                     </div>
@@ -152,7 +162,7 @@ const AddParcels = () => {
                         <div className="label">
                             <span className="label-text">Delivery Address Latitude</span>
                         </div>
-                        <input type="text" {...register("deliveryAddressLatitude",{required: true})} placeholder="delivery address latitude" className="input input-bordered w-full " />
+                        <input defaultValue={item.deliveryAddressLatitude} type="text" {...register("deliveryAddressLatitude",{required: true})} className="input input-bordered w-full " />
                     </label>
                     </div>
                     <div>
@@ -160,7 +170,7 @@ const AddParcels = () => {
                         <div className="label">
                             <span className="label-text">Delivery Address Longitude</span>
                         </div>
-                        <input type="text" {...register("deliveryAddressLongitude",{required: true})} placeholder="Type here" className="input input-bordered w-full " />
+                        <input defaultValue={item.deliveryAddressLongitude} type="text" {...register("deliveryAddressLongitude",{required: true})} className="input input-bordered w-full " />
                     </label>
                     </div>
                     <div>
@@ -168,15 +178,15 @@ const AddParcels = () => {
                         <div className="label">
                             <span className="label-text">Price</span>
                         </div>
-                        <input type="number" {...register("price",{required: true})} value={totalPrice} className="input input-bordered w-full " readOnly/>
+                        <input defaultValue={item.price} type="number" {...register("price",{required: true})} value={totalPrice} className="input input-bordered w-full " readOnly/>
                     </label>
                     </div>
                 </div> 
-                    <div className="text-center"> <button className="btn btn-secondary w-1/2 " type="submit">Book Parcel</button></div>  
+                    <div className="text-center"> <button className="btn btn-secondary w-1/2 " type="submit">Update Parcel</button></div>  
                 </form>
             </div>
         </div>
     );
 };
 
-export default AddParcels;
+export default UpdateParcel;

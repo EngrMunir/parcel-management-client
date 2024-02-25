@@ -35,9 +35,9 @@ const AllParcels = () => {
               parcels.map((item, index)=>(
                 <tr key={index}>
               <th>{index+1}</th>
-              <td>owner</td>
+              <td>{item.name}</td>
               <td>{item.phoneNumber}</td>
-              <td>Blue</td>
+              <td>{item.bookingDate}</td>
               <td>{item.requestedDeliveryDate}</td>
               <td>{item.price}</td>
               <td>{item.status}</td>
