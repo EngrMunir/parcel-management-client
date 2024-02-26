@@ -5,6 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { MdCancel, MdOutlineReviews, MdUpdate } from "react-icons/md";
 import { FaAmazonPay } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 
 
 
@@ -23,8 +24,25 @@ const MyParcels = () => {
         }
     })
     const handleCancel= async(parcelId)=>{
-        const res = await axiosPublic.patch(`/parcels/${parcelId}/cancel`,{status: 'cancelled'})
-        console.log(res.data);
+      const result= await Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+      })
+
+        if (result.isConfirmed) {
+          const res = await axiosPublic.patch(`/parcels/${parcelId}/cancel`,{status: 'cancelled'})
+          console.log(res.data);
+          // Swal.fire({
+          //   title: "Deleted!",
+          //   text: "Your file has been deleted.",
+          //   icon: "success"
+          // });
+        }
       
     }
 
@@ -76,7 +94,7 @@ const MyParcels = () => {
         </td>
         <td className="text-2xl"><MdOutlineReviews /></td>
         <td>
-          { myParcels.length ?
+          { myParcels.length && item.status!=='cancelled' ?
             <Link to="/dashboard/payment">
             <button className="btn btn-primary"><FaAmazonPay /></button>
           </Link>:
@@ -86,9 +104,7 @@ const MyParcels = () => {
         </td>
       </tr>
       )
-      }
-      
-      
+      }            
     </tbody>
   </table>
 </div>
