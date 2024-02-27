@@ -10,7 +10,7 @@ import Swal from "sweetalert2";
 
 
 const MyParcels = () => {
-    const { user } =useContext(AuthContext);
+    const { user,setPaymentPrice, setPaidId } =useContext(AuthContext);
     const axiosPublic = useAxiosPublic();
     const [myParcels, setMyParcels]=useState()
 
@@ -46,6 +46,12 @@ const MyParcels = () => {
       
     }
 
+    const handlePayment =(newPrice, id)=>{
+      console.log('price and id for context api',newPrice, id)
+      setPaymentPrice(newPrice)
+      setPaidId(id)
+    }
+   
     return (
         <div className="overflow-x-auto">
         <table className="table table-zebra">
@@ -93,11 +99,15 @@ const MyParcels = () => {
           }
         </td>
         <td className="text-2xl"><MdOutlineReviews /></td>
+       
         <td>
+        
           { myParcels.length && item.status!=='cancelled' ?
-            <Link to="/dashboard/payment">
-            <button className="btn btn-primary"><FaAmazonPay /></button>
-          </Link>:
+
+            <Link to={"/dashboard/payment"}>
+            <button onClick={()=>handlePayment(item.price,item._id)} className="btn btn-primary"><FaAmazonPay /></button>
+          </Link>
+          :
           <button disabled className="btn btn-primary"><FaAmazonPay /></button>
 
           }

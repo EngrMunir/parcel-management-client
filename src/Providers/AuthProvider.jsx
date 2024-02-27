@@ -12,6 +12,8 @@ const AuthProvider = ({children}) => {
     const [loading, setLoading] = useState(true);
     const googleProvider = new GoogleAuthProvider();
     const axiosPublic = useAxiosSecure();
+    const [price, setPrice]= useState(null);
+    const [productId, setProductId]=useState(null);
 
     const createUser = (email, password)=>{
         setLoading(true);
@@ -39,6 +41,13 @@ const AuthProvider = ({children}) => {
             displayName: name,
             photoURL: photo
         })
+    }
+
+    const setPaymentPrice = (newPrice)=>{
+         setPrice(newPrice)
+    }
+    const setPaidId = (id)=>{
+        setProductId(id);
     }
 
 
@@ -73,7 +82,11 @@ const AuthProvider = ({children}) => {
         signIn,
         logOut,
         updateUserProfile,
-        googleSignIn
+        googleSignIn,
+        price,
+        setPaymentPrice,
+        setPaidId,
+        productId
     }
     return (
         <AuthContext.Provider value={authInfo}>

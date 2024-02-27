@@ -19,6 +19,7 @@ import MyReviews from "../Pages/Dashboard/MyReviews/MyReviews";
 import Payment from "../Pages/Dashboard/Payment/Payment";
 import MyProfile from "../Pages/Dashboard/MyProfile/MyProfile";
 import UpdateParcel from "../Pages/Dashboard/UpdateParcel/UpdateParcel";
+import CheckoutForm from "../Pages/Dashboard/Payment/CheckoutForm";
 
 export const router = createBrowserRouter([
     {
@@ -64,6 +65,10 @@ export const router = createBrowserRouter([
         {
           path:'payment',
           element:<Payment></Payment>
+        },
+        {
+          path:'checkout',
+          element:<CheckoutForm></CheckoutForm>
         },
         // admin only routes
         {
