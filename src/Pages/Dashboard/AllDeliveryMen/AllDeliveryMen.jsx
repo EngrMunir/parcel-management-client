@@ -3,21 +3,15 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const AllDeliveryMen = () => {
     const axiosSecure = useAxiosSecure();
-    const { data: deliveryMen = [], isLoading, error } = useQuery({
+    const { data: deliveryMen=[] } = useQuery({
         queryKey: ['deliveryMen'],
         queryFn: async ()=>{
-            const res = await axiosSecure.get('/users/deliveryMen');
-            console.log(res.data)
+            const res = await axiosSecure.get('/deliveryMen');
+            console.log('delivery men',res.data)
             return res.data;
         }
     })
-    if (isLoading) {
-      return <p>Loading...</p>;
-    }
     
-    if (error) {
-      return <p>Error: {error.message}</p>;
-    }
     return (
         <div className="overflow-x-auto">
   <table className="table table-zebra">
@@ -36,9 +30,9 @@ const AllDeliveryMen = () => {
         deliveryMen.map((item, index) =><tr key={item._id}>
             <th>{index+1}</th>
             <td>{item.name}</td>
-            <td>{item._id}</td>
-            <td>Blue</td>
-            <td>Blue</td>
+            <td>01831013421</td>
+            <td>15</td>
+            <td>8</td>
           </tr>
           )
       }

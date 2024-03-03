@@ -1,9 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
-import { useState } from "react";
+import { FcManager } from "react-icons/fc";
 
 const AllParcels = () => {
     const axiosSecure = useAxiosSecure();
+
     // const [allParcels, setAllParcels] = useState();
     const { data: parcels = [] } = useQuery({
         queryKey: ['parcels'],
@@ -14,6 +15,7 @@ const AllParcels = () => {
             return res.data;
         }
     })
+
     return (
         <div className="overflow-x-auto">
         <table className="table table-zebra">
@@ -41,14 +43,27 @@ const AllParcels = () => {
               <td>{item.requestedDeliveryDate}</td>
               <td>{item.price}</td>
               <td>{item.status}</td>
-              <td>Manage Button</td>
+              <td className="text-3xl">
+              <button className="btn" onClick={()=>document.getElementById('manage_modal').showModal()}><FcManager /></button>
+              </td>
             </tr>
               ))
             }
-            
-            
+
           </tbody>
         </table>
+        <dialog id="manage_modal" className="modal modal-bottom sm:modal-middle">
+  <div className="modal-box">
+    <h3 className="font-bold text-lg">Hello!</h3>
+    <p className="py-4">Press ESC key or click the button below to close</p>
+    <div className="modal-action">
+      <form method="dialog">
+        {/* if there is a button in form, it will close the modal */}
+        <button className="btn">Close</button>
+      </form>
+    </div>
+  </div>
+</dialog>
       </div>
     );
 };
