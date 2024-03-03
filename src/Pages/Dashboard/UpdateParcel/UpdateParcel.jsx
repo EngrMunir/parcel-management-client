@@ -38,7 +38,6 @@ const UpdateParcel = () => {
          setTotalPrice(price);
          }, [parcelWeight]);
 
-
     console.log(item);
     const onSubmit = (data) =>{
         

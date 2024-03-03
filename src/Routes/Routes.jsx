@@ -20,6 +20,7 @@ import Payment from "../Pages/Dashboard/Payment/Payment";
 import MyProfile from "../Pages/Dashboard/MyProfile/MyProfile";
 import UpdateParcel from "../Pages/Dashboard/UpdateParcel/UpdateParcel";
 import CheckoutForm from "../Pages/Dashboard/Payment/CheckoutForm";
+import UpdateUser from "../Pages/Dashboard/UpdateUser/UpdateUser";
 
 export const router = createBrowserRouter([
     {
@@ -57,6 +58,10 @@ export const router = createBrowserRouter([
           path:'updateParcel/:id',
           element:<UpdateParcel></UpdateParcel>,
           // loader: ({params})=>fetch(`http://localhost:5000/parcels/update/${params.id}`)
+        },
+        {
+          path:'updateUser/:id',
+          element:<UpdateUser></UpdateUser>
         },
         {
           path:'myProfile',
