@@ -80,7 +80,7 @@ const MyParcels = () => {
         <td>A Delivery </td>
         <td>{item.bookingDate}</td>
         <td>
-          Delivery Id
+          {item.deliveryMenId}
         </td>
         <td>{item.status}</td>
         <td>
