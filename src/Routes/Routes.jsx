@@ -6,6 +6,7 @@ import Register from "../Pages/Register/Register";
 import Error from "../Pages/Error/Error";
 import Dashboard from "../Layout/Dashboard";
 import AllUsers from "../Pages/Dashboard/AllUsers/AllUsers";
+import BookAParcel from "../Pages/Dashboard/BookParcel/BookAParcel";
 
 export const router = createBrowserRouter([
     {
@@ -32,6 +33,10 @@ export const router = createBrowserRouter([
       element:<Dashboard></Dashboard>,
       children:[
         // normal user routes
+        {
+          path:'bookParcel',
+          element:<BookAParcel></BookAParcel>
+        },
         // moderator routes
         // admin routes
         {
