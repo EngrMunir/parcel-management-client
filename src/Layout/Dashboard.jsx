@@ -13,7 +13,7 @@ const Dashboard = () => {
                     <li><NavLink>My Delivery List</NavLink></li>
                     <li><NavLink>My Reviews</NavLink></li>
                     <li><NavLink>All Parcels</NavLink></li>
-                    <li><NavLink>All Users</NavLink></li>
+                    <li><NavLink to="/dashboard/allUser">All Users</NavLink></li>
                     <li><NavLink>All Delivery Men</NavLink></li>
                     <li><NavLink>Statistics</NavLink></li>
                 </ul>
