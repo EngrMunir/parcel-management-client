@@ -26,7 +26,7 @@ const AllParcels = () => {
                             <th>Sender Name</th>
                             <th>Sender Phone</th>
                             <th>Booking Date</th>
-                            <th>Requested Delivery Date</th>
+                            <th>Requested <br /> Delivery Date</th>
                             <th>Cost</th>
                             <th>Status</th>
                             <th>Manage Button</th>
@@ -38,12 +38,12 @@ const AllParcels = () => {
                         (
                             <tr key={parcel._id}>
                             <th>{parcel.name}</th>
-                            <td>Cy Ganderton</td>
-                            <td>Quality Control Specialist</td>
-                            <td>Blue</td>
-                            <td>Blue</td>
-                            <td>Blue</td>
-                            <td>Blue</td>
+                            <td>{parcel.phone}</td>
+                            <td>{parcel.bookingDate}</td>
+                            <td>{parcel.requestedDeliveryDate}</td>
+                            <td>{parcel.price}</td>
+                            <td>{parcel.status}</td>
+                            <td><button>Manage</button></td>
                         </tr>
                         )
                     ) }
