@@ -1,14 +1,52 @@
 import { useForm } from "react-hook-form";
 import useAuth from "../../../hook/useAuth";
+import useAxiosPublic from "../../../hook/useAxiosPublic";
+import Swal from "sweetalert2";
+import { format } from "date-fns";
+import { useEffect, useState } from "react";
 
 const BookAParcel = () => {
-    const { register,handleSubmit, formState: { errors },} = useForm();
+    const { register,handleSubmit, formState: { errors },reset, setValue, watch} = useForm();
     const { user } = useAuth();
+    const axiosPublic = useAxiosPublic();
+
+    const parcelWeight = watch('parcelWeight', 0);
+
+    useEffect(() => {
+        const totalPrice = calculatePrice(parcelWeight);
+        setValue('price', totalPrice);
+    }, [parcelWeight, setValue]);
+
+    const calculatePrice=(weight)=>{
+        if(weight<=2){
+            return weight*50;
+        }else{
+            return 150;
+        }
+    }
+
+    const onSubmit = async(data) =>{
+        const totalPrice = calculatePrice(data.parcelWeight)
+        setValue('price', totalPrice);
+        const date = new Date();
+        const bookingDate = format(date, 'yyyy-MM-dd');
+        const parcelInfo ={...data, bookingDate, status:'pending'};
+        console.log(parcelInfo)
+        const bookedParcel = await axiosPublic.post('/bookParcel', parcelInfo);
+        if(bookedParcel.data.insertedId){
+            Swal.fire({
+                title:'Congratulations',
+                text:'Parcel booked success',
+                icon:"success"
+            })
+            reset();
+        }
+    }
 
     return (
         <div className="bg-[#F4F3F0] p-20 mb-8">
             <h2 className="text-3xl text-center mb-5">Add A Parcel</h2>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit(onSubmit)}>
                 {/* name and email */}
                 <div className="md:flex gap-3 mb-8">
                     <div className="form-control md:w-1/2">
@@ -66,7 +104,7 @@ const BookAParcel = () => {
                             <span className="label-text">Parcel Weight</span>
                         </label>
                         <label className="input-group">
-                            <input type="text" {...register('parcelWeight', {required:true})} placeholder="Parcel Weight" className="input input-bordered w-full"/>
+                            <input type="number" {...register('parcelWeight', {required:true})} placeholder="Parcel Weight in kg" className="input input-bordered w-full"/>
                             {
                                 errors.parcelWeight && <span className="text-red-500">Parcel Weight is required</span>
                             }
@@ -127,7 +165,7 @@ const BookAParcel = () => {
                             <span className="label-text">Delivery Address Latitude</span>
                         </label>
                         <label className="input-group">
-                            <input type="text" {...register('deliveryAddressLatitude', {required:true})} placeholder="Delivery Address Latitude" className="input input-bordered w-full"/>
+                            <input type="text" {...register('latitude', {required:true})} placeholder="Delivery Address Latitude" className="input input-bordered w-full"/>
                             {
                                 errors.name && <span className="text-red-500">Delivery Address Latitude is required</span>
                             }
@@ -162,8 +200,7 @@ const BookAParcel = () => {
                 <div className="text-center">
                 <input className="btn btn-secondary w-1/3" type="submit" value="Submit" />
                 </div>
-            </form>
-            
+            </form>            
         </div>
     );
 };
