@@ -1,10 +1,13 @@
 import { useQuery } from '@tanstack/react-query';
 import useAxiosSecure from '../../../hook/useAxiosSecure';
+import { GrUserAdmin } from 'react-icons/gr';
+import { CiDeliveryTruck } from 'react-icons/ci';
+import Swal from 'sweetalert2';
 
 const AllUsers = () => {
     const axiosSecure = useAxiosSecure();
 
-    const { data: users=[], isLoading }= useQuery({
+    const { data: users=[], isLoading, refetch }= useQuery({
         queryKey:['user'],
         queryFn: async ()=>{
             const res = await axiosSecure.get('/users');
@@ -17,6 +20,35 @@ const AllUsers = () => {
         return <p>Loading....</p>
     }
 
+    const handleRole=(userId, newRole)=>{
+      const info={
+        id: userId,
+        role: newRole
+      }
+      Swal.fire({
+        title: `Are you sure to make ${newRole}?`,
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: `Yes, make ${newRole}!`
+      }).then((result) => {
+        if (result.isConfirmed) {
+         axiosSecure.patch('/users',info)
+         .then(res =>{
+          if(res.data.modifiedCount>0){
+            Swal.fire({
+              title: "Congrats",
+              text: `Role changed to ${newRole} successfully`,
+              icon: "success"
+            });
+            refetch();
+          }
+         })
+        }
+      });
+    }
     return (
         <div>
             <h2>All Users:{users.length}</h2>
@@ -25,12 +57,11 @@ const AllUsers = () => {
                 {/* head */}
                 <thead>
                   <tr>
-                    <th>User's Name</th>
+                    <th>Name</th>
                     <th>Phone Number</th>
                     <th>Number of Parcel Booked</th>
                     <th>Total Spent of Amount</th>
-                    <th>Make Delivery Men</th>
-                    <th>Make Admin</th>
+                    <th>Role</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -40,8 +71,13 @@ const AllUsers = () => {
                       <td>{user.phone}</td>
                       <td>0</td>
                       <td>Blue</td>
-                      <td>Moderator</td>
-                      <td>Admin</td>
+                      <td>
+                        <select defaultValue={user.role} onChange={(e)=>handleRole(user._id, e.target.value)}>
+                          <option value="user">User</option>
+                          <option value="admin">Admin</option>
+                          <option value="deliveryMen">Delivery Men</option>
+                        </select>
+                      </td>
                     </tr>))
                   }
                       
