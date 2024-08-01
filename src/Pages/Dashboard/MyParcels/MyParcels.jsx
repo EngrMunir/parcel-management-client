@@ -4,6 +4,7 @@ import useAxiosSecure from "../../../hook/useAxiosSecure";
 import { FaEdit } from "react-icons/fa";
 import { MdOutlineCancelPresentation, MdOutlineDeleteOutline, MdOutlinePayments, MdOutlineRateReview } from "react-icons/md";
 import Swal from "sweetalert2";
+import { Link } from "react-router-dom";
 
 const MyParcels = () => {
     const axiosSecure = useAxiosSecure();
@@ -67,13 +68,13 @@ const MyParcels = () => {
     <tbody>
       {
         myParcels.map(parcel =><tr className="bg-base-200" key={parcel._id}>
-            <th>{parcel.parcelType}</th>
+            <td>{parcel.parcelType}</td>
             <td>{parcel.requestedDeliveryDate}</td>
             <td>Quality Control</td>
             <td>{parcel.bookingDate}</td>
             <th>1</th>
             <td>{parcel.status}</td>
-            <th><FaEdit className="text-3xl text-blue-500" /></th>
+            <td><Link to={`/dashboard/update/${parcel._id}`}><FaEdit className="text-3xl text-blue-500" /></Link></td>
             <td><button onClick={()=>handleCancel(parcel._id)}><MdOutlineCancelPresentation className="text-3xl text-red-500"/> </button></td>
             <td><MdOutlineRateReview className="text-3xl text-blue-500"/> </td>
             <td><MdOutlinePayments className="text-3xl text-blue-500"/></td>  

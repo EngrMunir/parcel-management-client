@@ -9,6 +9,7 @@ import AllUsers from "../Pages/Dashboard/AllUsers/AllUsers";
 import BookAParcel from "../Pages/Dashboard/BookParcel/BookAParcel";
 import MyParcels from "../Pages/Dashboard/MyParcels/MyParcels";
 import AllParcels from "../Pages/Dashboard/AllParcels/AllParcels";
+import UpdateParcel from "../Pages/Dashboard/UpdateParcel/UpdateParcel";
 
 export const router = createBrowserRouter([
     {
@@ -42,6 +43,11 @@ export const router = createBrowserRouter([
         {
           path:'myParcels',
           element:<MyParcels></MyParcels>
+        },
+        {
+          path:'update/:id',
+          element:<UpdateParcel></UpdateParcel>,
+          loader:({params})=>fetch(`http://localhost:5000/bookParcel/${params.id}`)
         }
         // moderator routes
         // admin routes

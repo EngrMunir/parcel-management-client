@@ -2,6 +2,7 @@ import React from 'react';
 import useAxiosSecure from '../../../hook/useAxiosSecure';
 import useAuth from '../../../hook/useAuth';
 import { useQuery } from '@tanstack/react-query';
+import { MdManageAccounts } from 'react-icons/md';
 
 const AllParcels = () => {
     const axiosSecure = useAxiosSecure();
@@ -17,7 +18,7 @@ const AllParcels = () => {
     })
     return (
         <div>
-            <h2 className='text-3xl text-center'>All Parcels{allParcels.length}</h2>
+            <h2 className='text-3xl text-center'>All Parcel</h2>
             <div className="overflow-x-auto">
                 <table className="table">
                 {/* head */}
@@ -43,7 +44,7 @@ const AllParcels = () => {
                             <td>{parcel.requestedDeliveryDate}</td>
                             <td>{parcel.price}</td>
                             <td>{parcel.status}</td>
-                            <td><button>Manage</button></td>
+                            <td><button className='btn text-slate-400'><MdManageAccounts  className='text-3xl'/></button></td>
                         </tr>
                         )
                     ) }
