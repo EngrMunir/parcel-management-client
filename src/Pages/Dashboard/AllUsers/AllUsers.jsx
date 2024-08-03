@@ -1,7 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
 import useAxiosSecure from '../../../hook/useAxiosSecure';
-import { GrUserAdmin } from 'react-icons/gr';
-import { CiDeliveryTruck } from 'react-icons/ci';
 import Swal from 'sweetalert2';
 
 const AllUsers = () => {

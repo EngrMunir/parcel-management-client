@@ -49,39 +49,39 @@ const MyParcels = () => {
         <div>
             <h2 className="text-3xl text-center">My Parcels:{myParcels?.length}</h2>
             <div className="overflow-x-auto">
-  <table className="table">
-    {/* head */}
-    <thead>
-      <tr>
-        <th>Parcel Type</th>
-        <th>Requested <br /> Delivery Date</th>
-        <th>Approximate <br /> Delivery Date</th>
-        <th>Booking Date</th>
-        <th>Delivery Men Id</th>
-        <th>Status</th>
-        <th>Update</th>
-        <th>Cancel</th>
-        <th>Review</th>
-        <th>Pay</th>
-      </tr>
-    </thead>
-    <tbody>
-      {
-        myParcels.map(parcel =><tr className="bg-base-200" key={parcel._id}>
-            <td>{parcel.parcelType}</td>
-            <td>{parcel.requestedDeliveryDate}</td>
-            <td>Quality Control</td>
-            <td>{parcel.bookingDate}</td>
-            <th>1</th>
-            <td>{parcel.status}</td>
-            <td><Link to={`/dashboard/update/${parcel._id}`}><FaEdit className="text-3xl text-blue-500" /></Link></td>
-            <td><button onClick={()=>handleCancel(parcel._id)}><MdOutlineCancelPresentation className="text-3xl text-red-500"/> </button></td>
-            <td><MdOutlineRateReview className="text-3xl text-blue-500"/> </td>
-            <td><MdOutlinePayments className="text-3xl text-blue-500"/></td>  
-          </tr>)
-    }
-    </tbody>
-  </table>
+                <table className="table">
+                  {/* head */}
+                  <thead>
+                    <tr>
+                      <th>Parcel Type</th>
+                      <th>Requested <br /> Delivery Date</th>
+                      <th>Approximate <br /> Delivery Date</th>
+                      <th>Booking Date</th>
+                      <th>Delivery Men Id</th>
+                      <th>Status</th>
+                      <th>Update</th>
+                      <th>Cancel</th>
+                      <th>Review</th>
+                      <th>Pay</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {
+                      myParcels.map(parcel =><tr className="bg-base-200" key={parcel._id}>
+                          <td>{parcel.parcelType}</td>
+                          <td>{parcel.requestedDeliveryDate}</td>
+                          <td>Quality Control</td>
+                          <td>{parcel.bookingDate}</td>
+                          <th>1</th>
+                          <td>{parcel.status}</td>
+                          <td><Link to={`/dashboard/update/${parcel._id}`}><FaEdit className="text-3xl text-blue-500" /></Link></td>
+                          <td><button onClick={()=>handleCancel(parcel._id)}><MdOutlineCancelPresentation className="text-3xl text-red-500"/> </button></td>
+                          <td><MdOutlineRateReview className="text-3xl text-blue-500"/> </td>
+                          <td><Link to={`/payment/${parcel._id}`} state={{parcel}} ><MdOutlinePayments className="text-3xl text-blue-500"/></Link></td>  
+                        </tr>)
+                  }
+                  </tbody>
+                </table>
 </div>
         </div>
     );

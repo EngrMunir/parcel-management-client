@@ -10,6 +10,9 @@ import BookAParcel from "../Pages/Dashboard/BookParcel/BookAParcel";
 import MyParcels from "../Pages/Dashboard/MyParcels/MyParcels";
 import AllParcels from "../Pages/Dashboard/AllParcels/AllParcels";
 import UpdateParcel from "../Pages/Dashboard/UpdateParcel/UpdateParcel";
+import Payment from "../Payment/Payment";
+import MyDeliveryList from "../Pages/Dashboard/MyDeliveryList/MyDeliveryList";
+import AllDeliveryMen from "../Pages/Dashboard/AllDeliveryMen/AllDeliveryMen";
 
 export const router = createBrowserRouter([
     {
@@ -28,7 +31,11 @@ export const router = createBrowserRouter([
         {
             path:'/register',
             element:<Register></Register>
-        },        
+        },
+        {
+          path:'/payment/:id',
+          element:<Payment></Payment>
+        }        
       ]
     },
     {
@@ -48,8 +55,12 @@ export const router = createBrowserRouter([
           path:'update/:id',
           element:<UpdateParcel></UpdateParcel>,
           loader:({params})=>fetch(`http://localhost:5000/bookParcel/${params.id}`)
-        }
+        },
         // moderator routes
+        {
+          path:'myDeliveryList',
+          element:<MyDeliveryList></MyDeliveryList>
+        }
         // admin routes
         ,{
           path:'allUser',
@@ -58,6 +69,10 @@ export const router = createBrowserRouter([
         {
           path:'allParcels',
           element:<AllParcels></AllParcels>
+        },
+        {
+          path:'allDeliveryMen',
+          element:<AllDeliveryMen></AllDeliveryMen>
         },
       ]
     }
