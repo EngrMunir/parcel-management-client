@@ -24,7 +24,8 @@ const Register = () => {
                 const userInfo = {
                     name: data.name,
                     email: data.email,
-                    role:'user'
+                    role:'user',
+                    mobile_number:data.phone
                 }
 
                 axiosPublic.post('/users',userInfo)
@@ -61,9 +62,14 @@ const Register = () => {
                         errors.photo && <span className="text-red-500">Name is required</span>
                     }
                     <br />
+                    <input type="text" {...register('mobile',{required: true})} placeholder="Mobile Number" className="border w-full mb-4 py-2 px-4"/>
+                    {
+                        errors.mobile && <span className="text-red-500">Mobile Number is required</span>
+                    }
+                    <br />
                     <input type="email" {...register('email', {required: true})} placeholder="Email" className="border w-full mb-4 py-2 px-4"/>
                     {
-                        errors.email && <span className="text-red-500">Name is required</span>
+                        errors.email && <span className="text-red-500">Email is required</span>
                     }
                     <br />
                     <input type="password" {...register('password', {required: true, minLength:6, pattern:/(?=.*[A-Z])(?=.*[a-z])/ })} placeholder="Password" className="border w-full mb-4 py-2 px-4"/>

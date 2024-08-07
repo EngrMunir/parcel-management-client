@@ -66,7 +66,7 @@ const AllUsers = () => {
                   {
                     users.map(user=>(<tr key={user._id}>
                       <th>{user.name}</th>
-                      <td>{user.phone}</td>
+                      <td>{user.mobile_number}</td>
                       <td>0</td>
                       <td>Blue</td>
                       <td>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import useAxiosSecure from '../../../hook/useAxiosSecure';
 import useAuth from '../../../hook/useAuth';
 import { useQuery } from '@tanstack/react-query';
@@ -34,7 +34,7 @@ const AllParcels = () => {
         const result = await axiosSecure.patch('/assignDeliveryMen',assignInfo);
         if(result.data.modifiedCount>0){
             Swal.fire({
-                position: "center",
+                position: "top-right",
                 icon: "success",
                 title: "Delivery Men assigned",
                 showConfirmButton: false,
