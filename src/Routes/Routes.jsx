@@ -13,6 +13,7 @@ import UpdateParcel from "../Pages/Dashboard/UpdateParcel/UpdateParcel";
 import Payment from "../Payment/Payment";
 import MyDeliveryList from "../Pages/Dashboard/MyDeliveryList/MyDeliveryList";
 import AllDeliveryMen from "../Pages/Dashboard/AllDeliveryMen/AllDeliveryMen";
+import MyProfile from "../Pages/Dashboard/MyProfile/MyProfile";
 
 export const router = createBrowserRouter([
     {
@@ -55,6 +56,10 @@ export const router = createBrowserRouter([
           path:'update/:id',
           element:<UpdateParcel></UpdateParcel>,
           loader:({params})=>fetch(`http://localhost:5000/bookParcel/${params.id}`)
+        },
+        {
+          path:'myProfile',
+          element:<MyProfile></MyProfile>
         },
         // moderator routes
         {

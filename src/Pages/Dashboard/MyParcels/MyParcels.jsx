@@ -5,10 +5,17 @@ import { FaEdit } from "react-icons/fa";
 import { MdOutlineCancelPresentation, MdOutlineDeleteOutline, MdOutlinePayments, MdOutlineRateReview } from "react-icons/md";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { useState } from "react";
 
 const MyParcels = () => {
+
     const axiosSecure = useAxiosSecure();
+    const { register,handleSubmit } = useForm()
     const { user } = useAuth();
+    const [selectedParcelId, setSelectedParcelId]= useState('');
+    const [selectedDeliveryMenId, setSelectedDeliveryMenId]=useState('');
+    console.log(user)
 
     const { data: myParcels=[], refetch } = useQuery({
         queryKey:['parcels'],
@@ -17,6 +24,23 @@ const MyParcels = () => {
             return res.data;
         }
     })
+
+    const onSubmit = async(data) =>{
+      const feedbackInfo={user_name:data.user_name, user_image:data.user_image,
+      rating:parseInt(data.rating),feedback:data.feedback,deliveryMenId:data.deliveryMenId}
+      const result = await axiosSecure.post('/feedback',feedbackInfo);
+      console.log(result)
+      if(result.data.insertedId){
+          Swal.fire({
+              position: "top-right",
+              icon: "success",
+              title: "Feedback submitted successfully",
+              showConfirmButton: false,
+              timer: 1500
+            });
+            refetch();
+      }
+  }
 
     const handleCancel=async(id)=>{
       Swal.fire({
@@ -70,19 +94,51 @@ const MyParcels = () => {
                       myParcels.map(parcel =><tr className="bg-base-200" key={parcel._id}>
                           <td>{parcel.parcelType}</td>
                           <td>{parcel.requestedDeliveryDate}</td>
-                          <td>Quality Control</td>
+                          <td>{parcel.approximateDeliveryDate}</td>
                           <td>{parcel.bookingDate}</td>
-                          <th>1</th>
+                          <th>{parcel.deliveryMenId}</th>
                           <td>{parcel.status}</td>
                           <td><Link to={`/dashboard/update/${parcel._id}`}><FaEdit className="text-3xl text-blue-500" /></Link></td>
                           <td><button onClick={()=>handleCancel(parcel._id)}><MdOutlineCancelPresentation className="text-3xl text-red-500"/> </button></td>
-                          <td><MdOutlineRateReview className="text-3xl text-blue-500"/> </td>
+                          <td> <button onClick={()=>{setSelectedDeliveryMenId(parcel.deliveryMenId);
+                            document.getElementById('my_modal_5').showModal()}}><MdOutlineRateReview className="text-3xl text-blue-500"/></button></td>
                           <td><Link to={`/payment/${parcel._id}`} state={{parcel}} ><MdOutlinePayments className="text-3xl text-blue-500"/></Link></td>  
                         </tr>)
                   }
                   </tbody>
                 </table>
-</div>
+              </div>
+
+               {/* Open the modal using document.getElementById('ID').showModal() method */} 
+               <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
+                <div className="modal-box">
+                    <form onSubmit={handleSubmit(onSubmit)}>
+                        <h2 className="font-bold text-lg py-4">User Name</h2>
+                        <input {...register('user_name',{required:true})} type="text" defaultValue={user.displayName} readOnly /><br />
+                        <h2 className="font-bold text-lg py-4">User Image</h2>
+                        <input {...register('user_image',{required:true})} type="text" readOnly defaultValue={user.photoURL}/><br />
+                        <h2 className="font-bold text-lg py-4">Ratings</h2>
+                        <select name="" id="" {...register('rating',{required:true})}>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>          
+                        </select>
+                        <h2 className="font-bold text-lg py-4">Feedback</h2>
+                        <input {...register('feedback',{required:true})} type="text" className="border-2"/><br /> 
+                        <h2 className="font-bold text-lg py-4">Delivery Men ID</h2>
+                        <input {...register('deliveryMenId',{required:true})} type="text" defaultValue={selectedDeliveryMenId} readOnly/><br /> 
+                        <input type="submit" value="Submit" className='btn btn-sm btn-secondary ml-5'/>                       
+                    </form> 
+                    <div className="modal-action">
+                    <form method="dialog">
+                        {/* if there is a button in form, it will close the modal */}
+                        <button className="btn">Close</button>
+                    </form>
+                    </div>
+                </div>
+                </dialog>
         </div>
     );
 };

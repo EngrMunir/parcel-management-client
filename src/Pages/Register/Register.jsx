@@ -4,28 +4,44 @@ import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Providers/AuthProviders";
 import useAxiosPublic from "../../hook/useAxiosPublic";
 import Swal from "sweetalert2";
+import useAxiosSecure from "../../hook/useAxiosSecure";
 
 const Register = () => {
     const { register, handleSubmit, formState:{errors}, reset } = useForm()
     const { createUser, updateUserProfile } = useContext(AuthContext);
     const axiosPublic = useAxiosPublic();
+    const axiosSecure = useAxiosSecure();
     const navigate = useNavigate();
 
-    const onSubmit = data =>{
-        const email = data.email;
-        const password = data.password;
+    const image_hosting_key= import.meta.env.VITE_IMAGE_HOSTING_KEY;
+
+    const image_hosting_api=`https://api.imgbb.com/1/upload?key=${image_hosting_key}`
+
+    const onSubmit = async(data) =>{
+        const imageFile = { image: data.photo[0] }
+        const res = await axiosSecure.post(image_hosting_api, imageFile, {
+            headers:{
+                'content-type':'multipart/form-data'
+            }
+        });
+
+        if(res.data.success){
+            const email = data.email;
+            const password = data.password;
+            const image = res.data.data.display_url;
+            const phoneNumber = data.mobile;
 
         createUser(email, password)
         .then(res =>{
-            const loggedUser = res.user;
-            // console.log('user created successfully', loggedUser);
-            updateUserProfile(data.name, data.photo)
+            
+            updateUserProfile(data.name, image, phoneNumber)
             .then(()=>{
                 const userInfo = {
                     name: data.name,
                     email: data.email,
                     role:'user',
-                    mobile_number:data.phone
+                    phoneNumber:data.phone,
+                    image:image
                 }
 
                 axiosPublic.post('/users',userInfo)
@@ -46,6 +62,8 @@ const Register = () => {
             })
         })
 
+        }
+        
     }
     return (
         <div>
@@ -57,7 +75,8 @@ const Register = () => {
                         errors.name && <span className="text-red-500">Name is required</span>
                     }
                     <br />
-                    <input type="text" {...register('photo',{required: true})} placeholder="Photo URL" className="border w-full mb-4 py-2 px-4"/>
+                    <h2 className="text-xl">Profile Picture</h2>
+                    <input {...register('photo',{required:true})} type="file" className="file-input w-full max-w-xs mb-3" />
                     {
                         errors.photo && <span className="text-red-500">Name is required</span>
                     }
