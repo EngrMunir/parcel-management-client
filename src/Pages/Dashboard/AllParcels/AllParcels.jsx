@@ -23,13 +23,14 @@ const AllParcels = () => {
     const { data: deliveryMen=[] } = useQuery({
         queryKey:['deliveryMen'],
         queryFn: async()=>{
-            const res = await axiosSecure.get('/deliveryMen')
+            const res = await axiosSecure.get('/allDeliveryMen')
             console.log(res.data)
             return res.data;
         }
     })
 
     const onSubmit = async(data) =>{
+        console.log('id',data.deliveryMenId)
         const assignInfo={deliveryMenId:data.deliveryMenId, approximateDeliveryDate:data.approximateDeliveryDate, parcelId:selectedParcelId}
         const result = await axiosSecure.patch('/assignDeliveryMen',assignInfo);
         if(result.data.modifiedCount>0){
@@ -73,7 +74,7 @@ const AllParcels = () => {
                             <td>{parcel.status}</td>
                             <td> <button className="btn text-slate-400" 
                             onClick={()=>{setSelectedParcelId(parcel._id); 
-                            document.getElementById('my_modal_5').showModal()}}><MdManageAccounts  className='text-3xl'/></button></td>
+                            document.getElementById('my_modal_5').showModal()}}><MdManageAccounts className='text-3xl'/></button></td>
                         </tr>
                         )
                     ) }
@@ -88,7 +89,7 @@ const AllParcels = () => {
                         <h2 className="font-bold text-lg py-4">Approximate Delivery Date</h2>
                         <input {...register('approximateDeliveryDate',{required:true})} type="date" /><br />
                         <h2 className="font-bold text-lg py-4">Assign DeliveryMen</h2>
-                        <select name="" id="" {...register('deliveryMenId',{required:true})}>
+                        <select {...register('deliveryMenId',{required:true})}>
                             {
                                 deliveryMen.map(man =>(<option value={man._id} key={man._id}>{man.name}</option>))
                             }           
