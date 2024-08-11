@@ -40,7 +40,7 @@ const Register = () => {
                     name: data.name,
                     email: data.email,
                     role:'user',
-                    phoneNumber:data.phone,
+                    phoneNumber:phoneNumber,
                     image:image
                 }
 

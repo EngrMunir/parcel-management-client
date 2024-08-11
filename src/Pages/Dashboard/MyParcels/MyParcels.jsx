@@ -7,13 +7,13 @@ import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
+import { format } from "date-fns";
 
 const MyParcels = () => {
 
     const axiosSecure = useAxiosSecure();
     const { register,handleSubmit } = useForm()
     const { user } = useAuth();
-    const [selectedParcelId, setSelectedParcelId]= useState('');
     const [selectedDeliveryMenId, setSelectedDeliveryMenId]=useState('');
     console.log(user)
 
@@ -26,8 +26,10 @@ const MyParcels = () => {
     })
 
     const onSubmit = async(data) =>{
+      const date = new Date();
+      const feedbackDate = format(date, 'yyyy-MM-dd');
       const feedbackInfo={user_name:data.user_name, user_image:data.user_image,
-      rating:parseInt(data.rating),feedback:data.feedback,deliveryMenId:data.deliveryMenId}
+      rating:parseInt(data.rating),feedback:data.feedback,deliveryMenId:data.deliveryMenId, feedbackDate}
       const result = await axiosSecure.post('/feedback',feedbackInfo);
       console.log(result)
       if(result.data.insertedId){

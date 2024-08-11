@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 const BookAParcel = () => {
     const { register,handleSubmit, formState: { errors },reset, setValue, watch} = useForm();
     const { user } = useAuth();
+    // console.log(user)
     const axiosPublic = useAxiosPublic();
 
     const parcelWeight = watch('parcelWeight', 0);

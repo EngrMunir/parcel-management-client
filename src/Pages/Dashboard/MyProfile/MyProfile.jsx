@@ -8,7 +8,10 @@ import useAxiosPublic from '../../../hook/useAxiosPublic';
 
 const MyProfile = () => {
     // const axiosPublic= useAxiosPublic();
-    const { user }= useAuth();
+    const { user,loading }= useAuth();
+    if(loading){
+        return <p>Loading......</p>
+    }
     console.log(user)
     return (
         <div>

@@ -18,6 +18,8 @@ const AllUsers = () => {
         return <p>Loading....</p>
     }
 
+    const filteredUsers = users.filter(user => user.role ==='user')
+
     const handleRole=(userId, newRole)=>{
       const info={
         id: userId,
@@ -49,7 +51,7 @@ const AllUsers = () => {
     }
     return (
         <div>
-            <h2>All Users:{users.length}</h2>
+            <h2>All Users:{filteredUsers.length}</h2>
             <div className="overflow-x-auto">
               <table className="table">
                 {/* head */}
@@ -64,9 +66,9 @@ const AllUsers = () => {
                 </thead>
                 <tbody>
                   {
-                    users.map(user=>(<tr key={user._id}>
+                    filteredUsers.map(user=>(<tr key={user._id}>
                       <th>{user.name}</th>
-                      <td>{user.mobile_number}</td>
+                      <td>{user.phoneNumber}</td>
                       <td>0</td>
                       <td>Blue</td>
                       <td>

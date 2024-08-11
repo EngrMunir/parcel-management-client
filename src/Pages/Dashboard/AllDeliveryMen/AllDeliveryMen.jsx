@@ -30,9 +30,9 @@ const axiosSecure = useAxiosSecure();
               {
                 deliveryMen.map(user =><tr className="bg-base-200" key={user._id}>
                     <td>{user.name}</td>
-                    <td>{user.phone}</td>
-                    <td>Quality Control</td>
-                    <td>Review</td>  
+                    <td>{user.phoneNumber}</td>
+                    <td>{user.parcelCount}</td>
+                    <td>{user.averageReview}</td>  
                   </tr>)
               }
             </tbody>

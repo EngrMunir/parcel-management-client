@@ -14,6 +14,7 @@ import Payment from "../Payment/Payment";
 import MyDeliveryList from "../Pages/Dashboard/MyDeliveryList/MyDeliveryList";
 import AllDeliveryMen from "../Pages/Dashboard/AllDeliveryMen/AllDeliveryMen";
 import MyProfile from "../Pages/Dashboard/MyProfile/MyProfile";
+import MyReviews from "../Pages/Dashboard/MyReviews/MyReviews";
 
 export const router = createBrowserRouter([
     {
@@ -65,6 +66,10 @@ export const router = createBrowserRouter([
         {
           path:'myDeliveryList',
           element:<MyDeliveryList></MyDeliveryList>
+        },
+        {
+          path:'myReviews',
+          element:<MyReviews></MyReviews>
         }
         // admin routes
         ,{
