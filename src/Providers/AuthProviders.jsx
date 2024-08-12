@@ -3,6 +3,7 @@ import app from "../Firebase/Firebase.config";
 import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth";
 import { GoogleAuthProvider } from "firebase/auth/web-extension";
 import Swal from "sweetalert2";
+import useAxiosPublic from '../hook/useAxiosPublic';
 
 export const AuthContext = createContext(null)
 const auth = getAuth(app)
@@ -11,6 +12,7 @@ const AuthProviders = ({children}) => {
     const [user, setUser]= useState(null);
     const [loading, setLoading] = useState(true);
     const googleProvider = new GoogleAuthProvider();
+    const axiosPublic = useAxiosPublic()
 
     const createUser =(email, password)=>{
         setLoading(true)
@@ -39,16 +41,32 @@ const AuthProviders = ({children}) => {
 
     useEffect(()=>{
         const unSubscribe = onAuthStateChanged(auth, currentUser=>{
-            // const userEmail = currentUser?.email || user?.email;
-            // const loggedUser ={ email: userEmail};
+            const userEmail = currentUser?.email || user?.email;
+            const loggedUser = { email: userEmail };
             setUser(currentUser);
-            setLoading(false)
-            // if user exist than issue a token
-        })
+            console.log('current user', currentUser);
+            setLoading(false);
+            // if user exist then issue a token
+            if(currentUser){
+                // TODO: get token and store client
+                
+                axiosPublic.post('/jwt', loggedUser)
+                .then(res => {
+                    console.log('token response',res.data);
+                    if(res.data.token){
+                        localStorage.setItem('access-token', res.data.token)
+                    }
+                })
+            }
+            else{
+            // TODO: remove token (if token stored in the client side local storage, caching, in memory)
+                localStorage.removeItem('access-token')    
+                console.log('remove token')
+            }
         return ()=>{
             return unSubscribe();
         }
-    },[])
+    })},[])
 
     const authInfo={ createUser, login, logOut, googleLogin, updateUserProfile, user, loading }
     return (
