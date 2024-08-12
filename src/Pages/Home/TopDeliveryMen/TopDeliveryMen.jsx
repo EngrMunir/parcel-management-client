@@ -1,26 +1,27 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import useAxiosSecure from "../../../hook/useAxiosSecure";
+import DeliveryMenCard from "./DeliveryMenCard";
 
 const TopDeliveryMen = () => {
-    // const [topDeliveryMen, setTopDeliveryMen] = useState([]);
+    const axiosSecure = useAxiosSecure();
 
-    // useEffect(() => {
-    //     const fetchTopDeliveryMen = async () => {
-    //         try {
-    //             const response = await axios.get('/topDeliveryMen');
-    //             setTopDeliveryMen(response.data);
-    //             console.log(response.data)
-    //         } catch (error) {
-    //             console.error('Failed to fetch top delivery men', error);
-    //         }
-    //     };
-
-    //     fetchTopDeliveryMen();
-    // }, []);
+    const { data: topMen=[], refetch } = useQuery({
+        queryKey:['top'],
+        queryFn: async()=>{
+            const res = await axiosSecure.get('/topDeliveryMen')
+            console.log(res.data)
+            return res.data;
+        }
+    })
+   
     return (
-        <div>
+        <div className="mb-8">
             <h2 className="text-3xl text-center my-10">Top Delivery Men</h2>
-
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+                {
+                    topMen.map(top => <DeliveryMenCard key={top._id} deliveryMen={top}></DeliveryMenCard> )
+                }
+            </div>
         </div>
     );
 };

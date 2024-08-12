@@ -11,6 +11,7 @@ const MyReviews = () => {
     queryKey:['reviews'],
     queryFn: async()=>{
         const res = await axiosSecure.get(`/feedback?email=${user?.email}`)
+        console.log(res.data)
         return res.data;
     }
 })
