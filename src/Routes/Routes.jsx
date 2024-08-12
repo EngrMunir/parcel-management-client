@@ -15,6 +15,7 @@ import MyDeliveryList from "../Pages/Dashboard/MyDeliveryList/MyDeliveryList";
 import AllDeliveryMen from "../Pages/Dashboard/AllDeliveryMen/AllDeliveryMen";
 import MyProfile from "../Pages/Dashboard/MyProfile/MyProfile";
 import MyReviews from "../Pages/Dashboard/MyReviews/MyReviews";
+import PrivateRoute from "./PrivateRoute";
 
 export const router = createBrowserRouter([
     {
@@ -42,7 +43,7 @@ export const router = createBrowserRouter([
     },
     {
       path:'/dashboard',
-      element:<Dashboard></Dashboard>,
+      element:<PrivateRoute><Dashboard></Dashboard></PrivateRoute>,
       children:[
         // normal user routes
         {
