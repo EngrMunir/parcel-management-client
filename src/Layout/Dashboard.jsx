@@ -1,6 +1,30 @@
 import { Link, NavLink, Outlet } from 'react-router-dom';
+import useAxiosPublic from '../hook/useAxiosPublic';
+import useAuth from '../hook/useAuth';
+import { useQuery } from '@tanstack/react-query';
+
 
 const Dashboard = () => {
+    const axiosPublic=useAxiosPublic();
+    const {user, loading }=useAuth();
+    
+    if(loading){
+        return <p>Loading....</p>
+    }
+    console.log(user?.email);
+
+    const {data:loggedUser=[]}=useQuery({
+        queryKey:['email'],
+        queryFn: async()=>{
+            const res = await axiosPublic.get(`/users/${user.email}`)
+            console.log(res.data)
+            return res.data[0];
+        }
+    })
+
+    console.log(loggedUser.role)
+
+    const role = loggedUser.role;
     return (
         <div className='flex'>
             {/* sidebar */}

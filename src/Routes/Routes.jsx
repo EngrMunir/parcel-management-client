@@ -57,7 +57,7 @@ export const router = createBrowserRouter([
         {
           path:'update/:id',
           element:<UpdateParcel></UpdateParcel>,
-          loader:({params})=>fetch(`http://localhost:5000/bookParcel/${params.id}`)
+          loader:({params})=>fetch(`https://parcel-management-server-iota.vercel.app/bookParcel/${params.id}`)
         },
         {
           path:'myProfile',
