@@ -15,10 +15,10 @@ const Slider = () => {
         <div className='px-3 mb-5'>
         <Swiper navigation={true} modules={[Navigation]} className="mySwiper">
     <SwiperSlide>
-        <img src={slide1} alt="" />
+        <img src={slide2} alt="" />
     </SwiperSlide>
     <SwiperSlide>
-        <img src={slide2} alt="" />
+        <img src={slide1} alt="" />
     </SwiperSlide>
     <SwiperSlide>
         <img src={slide3} alt="" />
