@@ -16,6 +16,7 @@ import AllDeliveryMen from "../Pages/Dashboard/AllDeliveryMen/AllDeliveryMen";
 import MyProfile from "../Pages/Dashboard/MyProfile/MyProfile";
 import MyReviews from "../Pages/Dashboard/MyReviews/MyReviews";
 import PrivateRoute from "./PrivateRoute";
+import Statistics from "../Pages/Dashboard/Statistics/Statistics";
 
 export const router = createBrowserRouter([
     {
@@ -57,7 +58,7 @@ export const router = createBrowserRouter([
         {
           path:'update/:id',
           element:<UpdateParcel></UpdateParcel>,
-          loader:({params})=>fetch(`https://parcel-management-server-iota.vercel.app/bookParcel/${params.id}`)
+          loader:({params})=>fetch(`http://localhost:5000/bookParcel/${params.id}`)
         },
         {
           path:'myProfile',
@@ -85,6 +86,10 @@ export const router = createBrowserRouter([
           path:'allDeliveryMen',
           element:<AllDeliveryMen></AllDeliveryMen>
         },
+        {
+          path:'statistics',
+          element:<Statistics></Statistics>
+        }
       ]
     }
   ]);
