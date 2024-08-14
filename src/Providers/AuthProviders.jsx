@@ -45,7 +45,6 @@ const AuthProviders = ({children}) => {
             const loggedUser = { email: userEmail };
             setUser(currentUser);
             console.log('current user', currentUser);
-            setLoading(false);
             // if user exist then issue a token
             if(currentUser){
                 // TODO: get token and store client
@@ -55,12 +54,14 @@ const AuthProviders = ({children}) => {
                     console.log('token response',res.data);
                     if(res.data.token){
                         localStorage.setItem('access-token', res.data.token)
+                        setLoading(false);
                     }
                 })
             }
             else{
             // TODO: remove token (if token stored in the client side local storage, caching, in memory)
-                localStorage.removeItem('access-token')    
+                localStorage.removeItem('access-token')
+                setLoading(false);    
                 console.log('remove token')
             }
         return ()=>{

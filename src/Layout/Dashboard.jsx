@@ -14,16 +14,17 @@ const Dashboard = () => {
 
     const {data:loggedUser=[]}=useQuery({
         queryKey:['email'],
+        enabled:!loading,
         queryFn: async()=>{
-            const res = await axiosPublic.get(`/users?email=${user.email}`)
+            const res = await axiosPublic.get(`/userByEmail/${user.email}`)
             console.log(res.data)
             return res.data[0];
         }
     })
 
-    console.log(loggedUser.role)
+    // console.log(loggedUser?.role)
 
-    const role = loggedUser.role;
+    const role = loggedUser?.role;
 
     useEffect(() => {
         if (role === 'admin') {
