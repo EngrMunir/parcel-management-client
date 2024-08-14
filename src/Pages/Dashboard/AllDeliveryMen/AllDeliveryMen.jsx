@@ -7,7 +7,7 @@ const axiosSecure = useAxiosSecure();
   const { data: deliveryMen=[] } = useQuery({
     queryKey:['deliveryMen'],
     queryFn: async()=>{
-        const res = await axiosSecure.get('/deliveryMen')
+        const res = await axiosSecure.get('/deliveryMenStat',{credentials: 'include'})
         console.log(res.data)
         return res.data;
     }
@@ -28,7 +28,7 @@ const axiosSecure = useAxiosSecure();
             </thead>
             <tbody>
               {
-                deliveryMen.map(user =><tr className="bg-base-200" key={user._id}>
+                deliveryMen.map((user, idx) =><tr className="bg-base-200" key={idx}>
                     <td>{user.name}</td>
                     <td>{user.phoneNumber}</td>
                     <td>{user.parcelCount}</td>

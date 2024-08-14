@@ -1,14 +1,16 @@
-import { Link, NavLink, Outlet } from 'react-router-dom';
+import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom';
 import useAxiosPublic from '../hook/useAxiosPublic';
 import useAuth from '../hook/useAuth';
 import { useQuery } from '@tanstack/react-query';
+import { useEffect } from 'react';
 
 
 const Dashboard = () => {
     const axiosPublic=useAxiosPublic();
     const {user, loading }=useAuth();
+    const navigate = useNavigate();
     
-    console.log(user?.email);
+    console.log('user user',user?.email);
 
     const {data:loggedUser=[]}=useQuery({
         queryKey:['email'],
@@ -23,6 +25,16 @@ const Dashboard = () => {
 
     const role = loggedUser.role;
 
+    useEffect(() => {
+        if (role === 'admin') {
+            navigate('/dashboard/statistics');
+        } else if (role === 'deliveryMen') {
+            navigate('/dashboard/myDeliveryList');
+        } else if (role === 'user') {
+            navigate('/dashboard/myProfile');
+        }
+    }, [role, navigate]);
+
     if(loading){
         return <p>Loading....</p>
     }
@@ -35,9 +47,10 @@ const Dashboard = () => {
                         role =='user' &&
                         (
                             <>
+                                <li><NavLink to="/dashboard/myProfile">My Profile</NavLink></li>
                                 <li><NavLink to="/dashboard/bookParcel">Book a parcel</NavLink></li>
                                 <li><NavLink to="/dashboard/myParcels">My Parcels</NavLink></li>
-                                <li><NavLink to="/dashboard/myProfile">My Profile</NavLink></li>
+                                
                             </>
                         )
                     }
@@ -54,10 +67,11 @@ const Dashboard = () => {
                         role ==='admin'&&
                         (
                             <>
+                                 <li><NavLink to="/dashboard/statistics">Statistics</NavLink></li>
                                 <li><NavLink to="/dashboard/allParcels">All Parcels</NavLink></li>
                                 <li><NavLink to="/dashboard/allUser">All Users</NavLink></li>
                                 <li><NavLink to="/dashboard/allDeliveryMen">All Delivery Men</NavLink></li>
-                                <li><NavLink to="/dashboard/statistics">Statistics</NavLink></li>
+                               
                             </>
                         )
                     }

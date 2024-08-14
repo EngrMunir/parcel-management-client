@@ -23,7 +23,7 @@ const AllParcels = () => {
     const { data: deliveryMen=[] } = useQuery({
         queryKey:['deliveryMen'],
         queryFn: async()=>{
-            const res = await axiosSecure.get('/allDeliveryMen')
+            const res = await axiosSecure.get('/deliveryMen',{credentials:'include'})
             console.log(res.data)
             return res.data;
         }
@@ -55,7 +55,7 @@ const AllParcels = () => {
                             <th>Sender Name</th>
                             <th>Sender Phone</th>
                             <th>Booking Date</th>
-                            <th>Requested <br /> 3zqa Delivery Date</th>
+                            <th>Requested <br />Delivery Date</th>
                             <th>Cost</th>
                             <th>Status</th>
                             <th>Manage Button</th>
