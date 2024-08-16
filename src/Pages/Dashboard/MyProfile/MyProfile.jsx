@@ -15,7 +15,7 @@ const MyProfile = () => {
     console.log(user)
     return (
         <div>
-            <div className="avatar online">
+            <div className="avatar online ">
                 <div className="w-24 rounded-full">
                     <img src={user.photoURL} />
                 </div>

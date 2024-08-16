@@ -65,8 +65,10 @@ const CheckoutForm = ({parcel}) => {
         else{
             console.log('payment intent',paymentIntent)
             if(paymentIntent.status === 'succeeded'){
+                const transactionId=paymentIntent.id
                 console.log('transaction id ',paymentIntent.id);
                 setTransactionId(paymentIntent.id)
+
                 // now save payment data to database
                 const payment = {
                     email: user.email,
@@ -110,6 +112,9 @@ const CheckoutForm = ({parcel}) => {
           Pay
         </button>
         <p className='text-red-600'>{error}</p>
+        {
+            transactionId && <p className='text-green-600'>You transaction id: {transactionId}</p>
+        }
       </form>
     );
 };

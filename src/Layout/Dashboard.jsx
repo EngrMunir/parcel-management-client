@@ -40,7 +40,7 @@ const Dashboard = () => {
         return <p>Loading....</p>
     }
     return (
-        <div className='flex'>
+        <div className='flex  flex-col md:flex-row lg:flex-row items-center	md:items-start lg:items-start min-h-screen bg-blue-300'>
             {/* sidebar */}
             <div className='w-64 min-h-full bg-orange-400'>
                 <ul className='menu p-4'>
@@ -51,6 +51,7 @@ const Dashboard = () => {
                                 <li><NavLink to="/dashboard/myProfile">My Profile</NavLink></li>
                                 <li><NavLink to="/dashboard/bookParcel">Book a parcel</NavLink></li>
                                 <li><NavLink to="/dashboard/myParcels">My Parcels</NavLink></li>
+                                <li><NavLink to="/dashboard/paymentHistory">Payment History</NavLink></li>
                                 
                             </>
                         )

@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
-import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid } from 'recharts';
+import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, ResponsiveContainer } from 'recharts';
 import useAxiosSecure from '../../../hook/useAxiosSecure';
 
 const colors = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', 'red', 'pink'];
@@ -32,7 +32,8 @@ const Statistics = () => {
     };
 
     return (
-        <div>
+        <div  className="w-full h-full p-4">
+            <ResponsiveContainer width="100%" height={400}>
             <BarChart
                 width={500}
                 height={300}
@@ -53,6 +54,7 @@ const Statistics = () => {
                     ))}
                 </Bar>
             </BarChart>
+            </ResponsiveContainer>
         </div>
     );
 };

@@ -17,9 +17,9 @@ const TopDeliveryMen = () => {
     return (
         <div className="mb-8">
             <h2 className="text-3xl text-center my-10">Top Delivery Men</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mx-8 lg:mx-0 md:mx-0">
                 {
-                    topMen.map(top => <DeliveryMenCard key={top._id} deliveryMen={top}></DeliveryMenCard> )
+                    topMen?.map(top => <DeliveryMenCard key={top._id} deliveryMen={top}></DeliveryMenCard> )
                 }
             </div>
         </div>

@@ -17,6 +17,7 @@ import MyProfile from "../Pages/Dashboard/MyProfile/MyProfile";
 import MyReviews from "../Pages/Dashboard/MyReviews/MyReviews";
 import PrivateRoute from "./PrivateRoute";
 import Statistics from "../Pages/Dashboard/Statistics/Statistics";
+import PaymentHistory from "../Pages/Dashboard/PaymentHistory/PaymentHistory";
 
 export const router = createBrowserRouter([
     {
@@ -63,6 +64,10 @@ export const router = createBrowserRouter([
         {
           path:'myProfile',
           element:<MyProfile></MyProfile>
+        },
+        {
+          path:'paymentHistory',
+          element:<PaymentHistory></PaymentHistory>
         },
         // moderator routes
         {
