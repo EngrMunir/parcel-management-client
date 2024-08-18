@@ -1,8 +1,23 @@
-# React + Vite
+# ParcelPilot
+## Overview:
+The Parcel Management System is a comprehensive web-based application designed to streamline and automate the process of managing parcel deliveries. Built on the MERN stack (MongoDB, Express.js, React, and Node.js), the system offers a user-friendly interface and robust backend, ensuring efficient handling of all aspects of parcel management, from order placement to final delivery.. 
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Key Features:
+•	Admin Dashboard: Allows admins to oversee the entire system, monitor delivery statistics, and manage users.
+•	Delivery Personnel Dashboard: Enables delivery personnel to view and manage their assigned deliveries.
+•	Customer Dashboard: Provides customers with real-time tracking of their parcels and easy access to their delivery history.
 
-Currently, two official plugins are available:
+## Technology:
+React,Mongodb,DaisyUI,Firebase, Tailwind CSS, NodeJS, ExpressJS
+## Getting Started to clone project
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### 1. Clone the Repository
+Clone the project repository to your local machine using the following command:
+```sh
+git clone https://github.com/EngrMunir/parcel-management-client.git
+### 2. Move to the project repository
+cd parcel-management-client
+### 3. Install the required project dependencies using npm:
+npm install
+### 4. Start the development server:
+npm run dev
